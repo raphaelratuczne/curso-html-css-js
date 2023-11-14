@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passando parâmetros pela url</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="dist/main.js" type="module"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Lista de alunos</h1>
+    <div class="filtros">
+      <input type="search" class="busca" placeholder="Digite um nome e aperte Enter">
+      <label for="turma">
+        Turma
+      </label>
+      <select id="turma">
+        <option value="0">Todas</option>
+      </select>
+    </div>
+    <div class="lista-alunos">
+      <ul></ul>
+    </div>
+    <div class="paginacao">
+      <ul>
+        <li>
+          <a href="#">Anterior</a>
+        </li>
+        <li>
+          <a href="#">1</a>
+        </li>
+        <li class="active">
+          <a href="#">2</a>
+        </li>
+        <li>
+          <a href="#">3</a>
+        </li>
+        <li>
+          <a href="#">Próximo</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

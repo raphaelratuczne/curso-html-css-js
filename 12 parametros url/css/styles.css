@@ -1,0 +1,103 @@
+@charset "UTF-8";
+/* Estilo para o corpo da página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Estilo para o container principal */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Estilo para o cabeçalho h1 */
+  /* Estilo para o contêiner de filtros */
+}
+.container h1 {
+  background-color: #3498db;
+  color: #fff;
+  padding: 20px;
+  margin: 0;
+}
+.container .filtros {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  /* Estilo para o campo de busca */
+  /* Estilo para o rótulo do filtro "Turma" */
+  /* Estilo para o seletor "Turma" */
+}
+.container .filtros .busca {
+  flex: 4; /* Ocupa todo o espaço disponível */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.container .filtros label {
+  flex: 1;
+  margin-left: 10px; /* Espaço entre o campo de busca e o rótulo "Turma" */
+  color: #555;
+  font-weight: bold;
+}
+.container .filtros select {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.container .lista-alunos {
+  /* Estilo para a lista de alunos */
+  /* Estilo para cada item da lista (li) */
+  /* Estilo para o número de identificação (span.id) */
+  /* Estilo para os nomes dos alunos (span.name) dentro de links */
+  /* Estilo para a classe dos alunos (span.classe) */
+}
+.container .lista-alunos ul {
+  list-style: none;
+  padding: 0;
+}
+.container .lista-alunos li {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .lista-alunos .id {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.container .lista-alunos .name {
+  text-decoration: none;
+  color: #3498db;
+}
+.container .lista-alunos .classe {
+  color: #555;
+}
+.container .paginacao {
+  /* Estilo para a paginação */
+  /* Estilo para cada item da paginação */
+  /* Estilo para o link ativo da paginação */
+}
+.container .paginacao ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+.container .paginacao li {
+  margin: 0 5px;
+}
+.container .paginacao .active a {
+  font-weight: bold;
+  color: #3498db;
+}
+
+/*# sourceMappingURL=styles.css.map */
