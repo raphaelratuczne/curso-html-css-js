@@ -1,0 +1,28 @@
+@mixin flexCenterAndBgColor($bg: yellow, $h: 100px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg;
+  height: $h;
+}
+
+.header {
+  @include flexCenterAndBgColor(green, 150px);
+
+  .class1 {
+    color: $btnColor;
+
+    &.active {
+      background-color: blue;
+      color: #fff !important;
+    }
+
+    span {
+      font-size: 20px;
+    }
+  }
+
+  span {
+    font-weight: bold;
+  }
+} /* header */

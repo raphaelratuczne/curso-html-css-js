@@ -1,0 +1,11 @@
+@import "./vars";
+@import "./header";
+
+.contato {
+  // @extend .header;
+  @include flexCenterAndBgColor(lightblue);
+
+  .class1 {
+    color: blue;
+  }
+}

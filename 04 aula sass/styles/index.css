@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  height: 150px;
+}
+.header .class1 {
+  color: lightblue;
+}
+.header .class1.active {
+  background-color: blue;
+  color: #fff !important;
+}
+.header .class1 span {
+  font-size: 20px;
+}
+.header span {
+  font-weight: bold;
+}
+
+/* header */
+.contato {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightblue;
+  height: 100px;
+}
+.contato .class1 {
+  color: blue;
+}/*# sourceMappingURL=index.css.map */
