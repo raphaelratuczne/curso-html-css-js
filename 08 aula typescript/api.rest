@@ -1,0 +1,46 @@
+GET http://localhost:3500/games HTTP/1.1
+
+###
+GET http://localhost:3500/games?_sort=title&_order=asc HTTP/1.1
+
+###
+GET http://localhost:3500/games?_page=2&_limit=3 HTTP/1.1
+
+###
+GET http://localhost:3500/games/1 HTTP/1.1
+
+###
+GET http://localhost:3500/games?title=Super Mario 64 HTTP/1.1
+
+###
+GET http://localhost:3500/games?title_like=Zelda HTTP/1.1
+
+###
+POST http://localhost:3500/games HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Banjo-Kazooie",
+  "year": 1998,
+  "played": true
+}
+
+###
+PATCH http://localhost:3500/games/5 HTTP/1.1
+Content-Type: application/json
+
+{
+  "played": false
+}
+
+###
+PUT http://localhost:3500/games/5 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Banjo-Tooie",
+  "year": 2000
+}
+
+###
+DELETE http://localhost:3500/games/5 HTTP/1.1
