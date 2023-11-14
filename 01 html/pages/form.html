@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário</title>
+</head>
+
+<body>
+
+  <form action="#" method="post">
+    <fieldset>
+      <legend>dados do usuário</legend>
+      <label title="este é o label de nome" for="name">Nome</label>
+      <input title="este é um input do nome" id="name" type="text" name="nome" value="" placeholder="Digite seu nome"
+        tabindex="1" autofocus required list="opcoes-de-nome">
+      <datalist id="opcoes-de-nome">
+        <option value="Paula">Paula</option>
+        <option value="Carol">Carol</option>
+        <option value="Natalia">Natalia</option>
+      </datalist>
+      <br>
+      <label for="pass">Senha</label>
+      <input id="pass" type="password" value="" placeholder="digite uma senha">
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend>dados de endereço</legend>
+      <br>
+      <label for="adr">Endereço</label>
+      <input id="adr" type="text" name="endereco" value="" placeholder="Digite seu endereço" maxlength="100"
+        tabindex="4">
+    </fieldset>
+    <label for="age">Idade</label>
+    <input id="age" type="number" name="idade" value="" placeholder="Digite sua idade" tabindex="2">
+    <br>
+    <input name="volume" type="range" min="0" max="100" step="5" value="90">
+    <br>
+    <label for="cpf">CPF</label>
+    <input id="cpf" type="text" name="cpf" value="" placeholder="Digite seu cpf" maxlength="14" tabindex="3">
+    <br>
+    <label for="file">Arquivo</label>
+    <input id="file" type="file" accept=".pdf,.jpg,.png" multiple>
+    <br>
+    <input type="color" value="#555555">
+    <br>
+    <input type="date" min="2020-05-10" max="2025-06-30" value="2023-01-20">
+    <br>
+    <input type="datetime-local" min="2020-05-10T15:30">
+    <br>
+    <input type="month">
+    <br>
+    <input type="time">
+    <br>
+    <input type="week">
+    <br>
+    <input type="email" placeholder="email">
+    <br>
+    <input type="url" placeholder="url">
+    <br>
+    <input type="search" placeholder="digite uma palavra">
+    <br>
+    <input type="button" value="botão">
+    <input type="submit" value="salvar">
+    <input type="reset" value="limpar">
+    <br>
+    <button type="button">botão</button>
+    <button type="submit">salvar</button>
+    <button type="reset">limpar</button>
+    <br>
+    <br>
+    <br>
+    <label>
+      <input type="checkbox" name="opcoes" value="opcao 1">
+      opção 1
+    </label>
+    <br>
+    <input id="op2" type="checkbox" checked name="opcoes" value="opcao 2">
+    <label for="op2">opção 2</label>
+    <br>
+    <input id="op3" type="checkbox" name="opcoes" value="opcao 3">
+    <label for="op3">opção 3</label>
+    <br>
+    <br>
+    <br>
+    <label>
+      <input type="radio" name="outra" value="opcao 1">
+      opção 1
+    </label>
+    <br>
+    <input id="opr2" type="radio" checked name="outra" value="opcao 2">
+    <label for="opr2">opção 2</label>
+    <br>
+    <input id="opr3" type="radio" name="outra" value="opcao 3">
+    <label for="opr3">opção 3</label>
+    <br>
+    <br>
+    <label for="estado">Selecione seu estado</label>
+    <br>
+    <select type="select" id="estado">
+      <option value="" selected disabled>Selecione..</option>
+      <optgroup label="região norte">
+        <option value="pr">Paraná</option>
+        <option value="sp">São Paulo</option>
+        <option value="rj">Rio de Janeiro</option>
+      </optgroup>
+      <optgroup label="região central">
+        <option value="pr">Paraná</option>
+        <option value="sp">São Paulo</option>
+        <option value="rj">Rio de Janeiro</option>
+      </optgroup>
+      <optgroup label="região sul">
+        <option value="pr">Paraná</option>
+        <option value="sp">São Paulo</option>
+        <option value="rj">Rio de Janeiro</option>
+      </optgroup>
+    </select>
+    <br>
+    <br>
+    <label for="msg">Deixe sua msg</label>
+    <br>
+    <textarea id="msg" placeholder="escreva..." cols="30" rows="10"></textarea>
+
+  </form>
+
+
+
+</body>
+
+</html>
