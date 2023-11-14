@@ -1,0 +1,15 @@
+{
+  "name": "aula-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "start": "npx live-server",
+    "compile:sass": "npx sass sass/main.scss css/styles.css -w",
+    "compile:typescript": "npx tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
