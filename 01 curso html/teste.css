@@ -1,0 +1,78 @@
+/* @font-face {
+  font-family: Grover;
+  src: url(./fonts/grover/Grover.ttf);
+} */
+
+:root {
+  --corTextoBase: #999;
+  --corTextoAlerta: #7a2121;
+  --margemLateral: 25px;
+  --bordaPadrao: '1px solid blue';
+}
+
+.minha-div-exemplo {
+  width: 600px;
+  height: 350px;
+  border: 1px solid red;
+
+  /* background-color: ; */
+  /* background-image: url('images/among-us-127.png'); */
+  /* background-repeat: no-repeat; */
+  /* background-position: bottom right; */
+
+  background: var(--corTextoAlerta) url('images/among-us-127.png') no-repeat bottom right;
+  background-size: 150px;
+}
+
+
+.meus-h1s {
+  color: var(--corTextoAlerta);
+}
+
+h1,
+b {
+  font-weight: 500;
+}
+
+.pai {
+  width: 100%;
+  height: 300px;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+.filho {
+  width: 150px;
+  /* height: 150px; */
+  background-color: green;
+  border: 1px solid darkgreen;
+  font-size: 25px;
+}
+
+.degrade-texto {
+  font-weight: bold;
+}
+
+.imagem1 {
+  width: 100%;
+  height: 250px;
+  background: url('images/among-us-127.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 1px solid #999;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.imagem2 {
+  width: 50%;
+  height: 150px;
+  background: url('images/among-us-127.png');
+  background-size: 15%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid blue;
+}

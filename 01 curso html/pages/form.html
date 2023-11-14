@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário</title>
+</head>
+
+<body>
+
+  <form action="#" method="post">
+    <fieldset>
+      <legend>Login</legend>
+      <label>
+        E-mail
+        <br>
+        <input type="text" name="email" value="">
+      </label>
+      <br>
+      <label>
+        Senha
+        <br>
+        <input type="password" name="senha" value="">
+      </label>
+    </fieldset>
+    <br>
+    <label>
+      Idade
+      <br>
+      <input type="number" name="idade" value="">
+    </label>
+    <br>
+    <label>
+      Idade aceita
+      <br>
+      <input type="range" name="idade-aceita" value="" min="10" max="100">
+    </label>
+    <br>
+    <label>
+      Arquivo
+      <br>
+      <input type="file" name="trabalho" multiple accept=".pdf">
+    </label>
+    <br>
+    <label>
+      Cor
+      <br>
+      <input type="color" name="cor">
+    </label>
+    <br>
+    <label>
+      Data
+      <br>
+      <input type="date" name="data-de-nascimento" min="2020-01-01">
+    </label>
+    <br>
+    <label>
+      Data e hora
+      <br>
+      <input type="datetime-local" name="data-e-hora" min="2020-01-01">
+    </label>
+    <br>
+    <label>
+      Mês
+      <br>
+      <input type="month" name="mes" min="2020-01">
+    </label>
+    <br>
+    <label>
+      Hora
+      <br>
+      <input type="time" name="hora">
+    </label>
+    <br>
+    <label>
+      Semana
+      <br>
+      <input type="week" name="semana">
+    </label>
+    <br>
+    <label>
+      Email
+      <br>
+      <input type="email" name="email">
+    </label>
+    <br>
+    <label>
+      Telefone
+      <br>
+      <input type="tel" name="telefone">
+    </label>
+    <br>
+    <br>
+    <input type="button" value="botão">
+    <input type="submit" value="salvar">
+    <input type="reset" value="limpar">
+    <br>
+    <br>
+    <button type="button">Botão</button>
+    <button type="submit">Salvar</button>
+    <button type="reset">Limpar</button>
+    <br>
+    <br>
+    <br>
+
+    <label>
+      <input type="checkbox" name="tipos-de-comidas" value="japonesa">
+      comida japonesa
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" name="tipos-de-comidas" value="brasileira" checked>
+      comida brasileira
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" name="tipos-de-comidas" value="italiana">
+      comida italiana
+    </label>
+
+    <br>
+    <br>
+    <br>
+    <label>
+      <input type="radio" name="tipos-de-comidas" value="japonesa">
+      comida japonesa
+    </label>
+    <br>
+    <label>
+      <input type="radio" name="tipos-de-comidas" value="brasileira" checked>
+      comida brasileira
+    </label>
+    <br>
+    <label>
+      <input type="radio" name="tipos-de-comidas" value="italiana">
+      comida italiana
+    </label>
+    <br>
+    <br>
+
+    <label>
+      Estado
+      <br>
+      <select name="estado">
+        <option value="" disabled selected>Selecione um estado</option>
+        <option value="PR">Paraná</option>
+        <option value="SP">São Paulo</option>
+        <option value="RJ">Rio de Janeiro</option>
+      </select>
+    </label>
+    <br>
+    <br>
+    <label>
+      Mensagem
+      <br>
+      <textarea name="mensagem"></textarea>
+    </label>
+    <br>
+    <br>
+    <br>
+    <br>
+  </form>
+
+
+</body>
+
+</html>

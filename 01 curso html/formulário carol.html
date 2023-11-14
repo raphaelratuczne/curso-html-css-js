@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+</head>
+<body>
+    <form action="#" method="post">
+    <h2>FORMULÁRIO</h2>
+        <fieldset><legend>DADOS PESSOAIS</legend><br>
+    <label><b>NOME COMPLETO:</b> 
+        <input type="text" name="nome-compelto" maxlength="150" value="" placeholder="digite seu nome completo" autofocus>
+    </label>
+    <br><br>
+    <label><b>E-MAIL:</b> 
+        <input type="text" name="e-mail" maxlength="50" value="" placeholder="seuemail@email.com">
+    </label>
+    <br><br>
+    <label>
+        <b>DATA DE NASCIMENTO:</b> 
+        <input type="date" name="data-de-nascimento" min="2005-01-01">
+    </label>
+    <br><br>
+    <label><b>SEXO:</b></label>
+    <br>
+    <input type="radio" name="sexo" value="feminino">
+    <label>FEMININO</label>
+    <br>
+    <input type="radio" name="sexo" value="masculino">
+    <label>MASCULINO</label>
+    <br> 
+    <input type="radio" name="sexo" value="outros">
+    <label>OUTROS</label>    
+    <br><br>
+    <label><b>FOTO RECENTE:</b> 
+        <input type="file" accept=".png;.jpeg,.jpg">
+        <br>
+    </fieldset>
+    <br>
+    <fieldset><legend>PESQUISA</legend><br>
+    <label><b>POSSUI CARRO?</b></label><br> 
+        <label>SIM
+            <input type="radio" name="possui-carro" value="sim"><br>
+        </label>
+        <label>NÃO
+            <input type="radio" name="possui-carro" value="não">
+        </label> <br>
+        <label>SE SIM, QUANTOS?
+            <input type="number" name="quantos-carros" value="" min="0" max="9">
+        </label><br><br>
+    </label>
+        <label><b>QUANTOS DIAS POR SEMANA COSTUMA PEDIR COMIDA?</b>
+            <input type="number" name="vezes-pede-comida-semana" min="0" max="7">
+        </label>
+        <br><br>
+        <label><b>QUAIS TIPOS DE COMIDA GOSTA?</b></label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="lanches">
+        <label>LANCHES</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="pizzas">
+        <label>PIZZAS</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="doces-e-bolos">
+        <label>DOCES E BOLOS</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="japonesa">
+        <label>JAPONESA</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="brasileira">
+        <label>BRASILEIRA</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="arabe">
+        <label>ÁRABE</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="chinesa">
+        <label>CHINESA</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="vegetariana">
+        <label>VEGETARIANA</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="gourmet">
+        <label>GOURMET</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="bebidas">
+        <label>BEBIDAS</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="salgados">
+        <label>SALGADOS</label>
+        <br>
+        <input type="checkbox" name="gosta-tipos-comida" value="marmita">
+        <label>MARMITA</label>
+        <br><br>
+        <label><b>QUAL O SISTEMA DO SEU SMARTPHONE?</b></label>
+        <br>
+        <input type="radio" name="sistema-smartphone" value="android">
+        <label>ANDROID</label>
+        <br>
+        <input type="radio" name="sistema-smartphone" value="ios">
+        <label>IOS</label>
+        <br><br>
+        <label><b>PAÍSES QUE JÁ VISITOU?</b></label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="argentina">
+        <label>ARGENTINA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="australia">
+        <label>AUSTRALIA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="portugal">
+        <label>PORTUGAL</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="eua">
+        <label>EUA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="italia">
+        <label>ITÁLIA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="frança">
+        <label>FRANÇA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="espanha">
+        <label>ESPANHA</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="coreia do sul">
+        <label>CORÉIA DO SUL</label>
+        <br>
+        <input type="checkbox" name="paises-ja-visitou" value="japao">
+        <label>JAPÃO</label>
+        <br><br>
+        <label><b>GOSTARIA DE RECEBER UM BRINDE?</b></label>
+        <br>
+        <input type="radio" name="receber-brinde" value="sim">
+        <label>SIM</label>
+        <br>
+        <input type="radio" name="receber-brinde" value="nao">
+        <label>NÃO</label>
+        <br><br>
+        <label><b>PREENCHA SEU ENDEREÇO:</b></label><br><br>
+        <label>CEP:
+            <input type="text" name="cep" maxlength="9" placeholder="CEP sem traços e pontos">
+        </label>
+        <br><br>
+        <label>ENDEREÇO:
+            <input type="text" name="endereco" maxlength="150" placeholder="digite seu endereço">
+        </label>
+        <br><br>
+        <label>NÚMERO:
+            <input type="text" name="numero" maxlength="10" placeholder="digite número da residência">
+        </label>
+        <br><br>
+        <label>COMPLEMENTO:
+            <input type="text" name="complemento" maxlength="50" placeholder="digite seu complemento">
+        </label>
+        <br><br>
+        <label>BAIRRO:
+            <input type="text" name="bairro" maxlength="100" placeholder="digite seu bairro">
+        </label>
+        <br><br>
+        <label>CIDADE:
+            <input type="text" name="cidade" maxlength="100" placeholder="digite sua cidade">
+        </label>
+        <br><br>
+        <label><b>SELECIONE SEU ESTADO</b></label>
+        <br>
+        <input type="radio" name="estado" value="paraná">
+        <label>PARANÁ</label>
+        <br>
+        <input type="radio" name="estado" value="são paulo">
+        <label>SÃO PAULO</label>
+        <br>
+        <input type="radio" name="estado" value="rio de janeiro">
+        <label>RIO DE JANEIRO</label>
+        <br><br>
+        <label><b>GOSTARIA DE DEIXAR ALGUMA MENSAGEM SOBRE NOSSA PESQUISA?</b></label>
+        <br>
+        <textarea name="mensagem" cols="80" rows="10"></textarea>
+        <br><br>
+        <button type="submit">ENVIAR</button>
+        <button type="reset">CANCELAR</button>
+</fieldset>  
+</form>
+</body>
+</html>

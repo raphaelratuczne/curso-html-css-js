@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Minha Timeline</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      scroll-behavior: smooth;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #ccc;
+      left: 50%;
+      margin-left: -1px;
+      z-index: -1;
+    }
+
+    @keyframes myAni {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .timeline-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      background-color: #fff;
+      border-radius: 5px;
+      margin: 50px 0;
+      animation: myAni 0.7s;
+    }
+
+    .timeline-item:nth-child(even)::after,
+    .timeline-item:nth-child(odd)::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: #ccc;
+      border-radius: 50%;
+      top: 50%;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      transform: translateY(-50%);
+      right: -6px;
+    }
+
+    .timeline-item:nth-child(odd)::before {
+      transform: translateY(50%);
+      left: -6px;
+    }
+
+    .timeline-item-content {
+      flex: 1;
+      padding: 0 20px;
+    }
+
+    .timeline-item-content h2 {
+      margin-top: 0;
+    }
+
+    .timeline-item-content p {
+      margin: 10px 0 0;
+    }
+
+    .timeline-item-content img {
+      max-width: 500px;
+      max-height: 300px;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-item-content {
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .timeline-item-content h2 {
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .timeline-item-content p {
+      text-align: right;
+    }
+
+    .area-btn {
+      width: 100%;
+    }
+
+    .area-btn button {
+      margin: 10px auto;
+      display: block;
+    }
+  </style>
+  <script>
+    const history = [
+      {
+        date: "1843",
+        text: "Ada Lovelace (1815-1852) foi uma matemática, escritora e pioneira na programação de computadores. Ela é conhecida por ter escrito o primeiro algoritmo destinado a ser processado por uma máquina, tornando-se assim a primeira programadora de computadores do mundo.",
+        img: "https://s2.glbimg.com/paF5KTEVGzMU-ZcZa2mjYicNDjM=/e.glbimg.com/og/ed/f/original/2015/03/09/ada.jpg",
+      },
+      {
+        date: "1946",
+        text: "O ENIAC (Electronic Numerical Integrator and Computer) foi um o primeiro computador eletrônico de grande escala construído nos Estados Unidos. Foi desenvolvido na Universidade da Pensilvânia durante a Segunda Guerra Mundial para ajudar nos cálculos balísticos necessários para o projeto de armas. O ENIAC foi programado por um grupo de mulheres matemáticas, conhecidas como \"computadoras\", que trabalharam na Universidade da Pensilvânia durante a Segunda Guerra Mundial. Essas mulheres foram recrutadas para realizar cálculos matemáticos complexos necessários para projetar armas e outros equipamentos militares.",
+        img: "https://www.ufrgs.br/enigma/wp-content/uploads/2021/05/125743.213549-ENIAC-girls.jpg",
+      },
+      {
+        date: "1958",
+        text: "Em 1958, os Estados Unidos desenvolveram e criaram a DARPA — Defense Advanced Research Projects Agency — Agência de Projetos de Pesquisa Avançada de Defesa. Essa agência teve grande importância na história da evolução internet, pois dela originaram- se pesquisas e desenvolvimento de tecnologias inovadoras para finalidades militares defensivas, e entre elas, a rede de computadores.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/DARPA_Logo.jpg",
+      },
+      {
+        date: "1989",
+        text: "A internet começa a ser usada para transmissão de dados entre os EUA e o CERN (Organização Europeia para a Pesquisa Nuclear).",
+        img: "https://upload.wikimedia.org/wikipedia/pt/2/22/Logo_of_CERN.png",
+      },
+      {
+        date: "1991",
+        text: "O padrão WWW foi liberado para o publico geral.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/d/d1/WWW-LetShare.svg",
+      },
+      {
+        date: "1995",
+        text: "É lançado o Internet Explorer, que logo se tornou o navegador mais usado no mundo por já vir instalado no Windows. Nesse ano também foi lançado o JavaScript possibilitando muito mais controle sobre os formulários.",
+        img: "https://sm.ign.com/ign_br/screenshot/default/capa-internet-explorer-x-1400x788_a8qg.jpg",
+      },
+      {
+        date: "1996",
+        text: "Foi é lançado o CSS permitindo uma separação mais clara entre a estrutura do documento (HTML) e seu estilo (CSS). Também foi lançado o Flash, tecnologia que trazia muitos efeitos e animações para os sites.",
+        img: "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics/css-declaration-small.png",
+      },
+      {
+        date: "1998",
+        text: "Surge o Google trazendo uma nova forma de indexar as páginas de internet o que redefine muitos padrões até então utilizados.",
+        img: "https://aletp.com.br/wp-content/uploads/2008/10/pagina-google-antiga.jpg",
+      },
+      {
+        date: "2004",
+        text: "O Gmail, o serviço de e-mail do Google, foi lançado em 2004. Logo se tornou um dos serviços de e-mail mais populares do mundo. O Gmail foi o primeiro serviço de e-mail a oferecer 1 GB de armazenamento gratuito. O Gmail também foi o primeiro serviço de e-mail a usar o AJAX (Asynchronous JavaScript and XML) para permitir que os usuários interagissem com o aplicativo sem precisar recarregar a página.",
+        img: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gmail_EVO_Thumbnail_3.width-1300.png",
+      },
+      {
+        date: "2006",
+        text: "Em 2006 foi lançado o Jquery, uma biblioteca JavaScript que simplificou a manipulação de documentos HTML, manipulação de eventos, animações e interações Ajax para desenvolvedores da web. O Jquery foi projetado para funcionar em vários navegadores da web, também foi projetado para simplificar o desenvolvimento de aplicativos da web responsivos e móveis, foi uma das bibliotecas JavaScript mais populares e influentes de todos os tempos. Nesse mesmo ano foi lançado o sass que trouxe para o css uma série de recursos que não existiam até então, como variáveis, funções, mixins, herança, etc.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_jQuery.svg/1200px-Logo_jQuery.svg.png",
+      },
+      {
+        date: "2007",
+        text: "O lançamento do primeiro modelo do iPhone, em 2007, marcou um marco significativo na história da tecnologia e teve um impacto profundo em diversas áreas. No mesmo ano também teve o lançamento do Android pela Google.",
+        img: "https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2023/05/iOS-android.png",
+      },
+      {
+        date: "2008",
+        text: "O lançamento do Google Chrome, em 2008, foi um evento significativo na história dos navegadores da web.",
+        img: "https://macmagazine.com.br/wp-content/uploads/2023/02/28-google-chrome.png",
+      },
+      {
+        date: "2009",
+        text: "O Node.js foi lançado em 2009, como uma plataforma de tempo de execução de código aberto baseada no mecanismo de JavaScript V8 do Google Chrome. O Node.js permite que os desenvolvedores executem código JavaScript no lado do servidor, proporcionando um ambiente de desenvolvimento escalável e de alto desempenho. Nesse ano tambem foi lançado o Apache Cordova que permite o desenvolvimento de aplicativos móveis usando tecnologias web como HTML, CSS e JavaScript.",
+        img: "https://blog.geekhunter.com.br/wp-content/uploads/2021/02/1_mp91A9RzagntGGjBnwu4Yw.png",
+      },
+      {
+        date: "2010",
+        text: "Lançado em 2010 o Angularjs é um framework criado pelo Google para desenvolvimento de aplicativos web que ficou famoso pela abordagem modular. Nesse ano começou a popularização dos Smartphones e Tablets que ocasionou uma fragmentação do ambiente mas também popularizou os recursos de touch, geolocalização, cameras, microfone, notificações..",
+        img: "data:image/png;base64,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",
+      },
+      {
+        date: "2012",
+        text: "O Webpack, uma poderosa ferramenta de construção de pacotes para aplicativos web. O TypeScript, desenvolvida pela Microsoft, é uma extensão do JavaScript que adiciona recursos de tipagem estática e recursos adicionais ao JavaScript padrão. O Css chega a suam 3º versão, CSS3.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png",
+      },
+      {
+        date: "2013",
+        text: "O Reactjs foi lançado pelo Facebook como uma biblioteca JavaScript de código aberto para criar interfaces de usuário, introduzindo o conceito de componentes reutilizáveis e uma abordagem de programação declarativa.",
+        img: "https://www.datocms-assets.com/45470/1631110818-logo-react-js.png",
+      },
+      {
+        date: "2014",
+        text: "Foi lançado o HTML5, a mais recente versão da linguagem de marcação utilizada para estruturar e apresentar o conteúdo de páginas da web.",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/1200px-HTML5_logo_and_wordmark.svg.png",
+      },
+      {
+        date: "2015",
+        text: "A especificação padrão chamada ES6/ES2015 (também chamado ECMAScript) foi lançada trazendo uma série de novos recursos e melhorias para a linguagem JavaScript (O termo Vanilla ganha popularidade para se referir ao Javascript puro). Foi lançado também o React Native para desenvolver aplicativos para Android e iOS, permitindo que os desenvolvedores usem o React junto com as capacidades da plataforma nativa.",
+        img: "https://victorvhpg.github.io/assets/conteudo-posts/2016/es6/logo.jpg",
+      },
+      {
+        date: "2016",
+        text: "As camadas de UX/UI Designer, Front-end e Back-end ganha maior definição e popularidade.",
+        img: "https://img.freepik.com/vetores-gratis/fundo-gradiente-ui-ux_23-2149052117.jpg",
+      },
+      {
+        date: "2021",
+        text: "Com a pandemia de COVID, o trabalho com tecnologia ganha muita popularidade, com a necessidade de se reinventar e se adaptar.",
+        img: "https://pontonow.com.br/blog/wp-content/uploads/2021/10/Trabalho-remoto.png",
+      },
+      {
+        date: "2023",
+        text: "O uso da inteligência artificial para auxilio do trabalho como desenvolvedor é o assunto do momento.",
+        img: "https://www.telesintese.com.br/wp-content/uploads/2023/03/inteligencia-artificial-ia-ai-freepik-2023.jpg",
+      },
+    ];
+
+    function* gen() {
+      yield* history;
+    }
+
+    function start() {
+      const template = document.querySelector("#timeline-item");
+      const timeline = document.querySelector(".timeline");
+      const btn = document.querySelector("button");
+
+      const it = gen();
+      let current = it.next();
+      console.log("current", current);
+
+      btn.addEventListener("click", () => {
+        btn.textContent = "Próximo";
+
+        const clone = template.content.cloneNode(true);
+        clone.querySelector(".timeline-date").textContent = current.value.date;
+        clone.querySelector(".timeline-text").textContent = current.value.text;
+        clone.querySelector(".timeline-img").src = current.value.img;
+        timeline.appendChild(clone);
+        current = it.next();
+        console.log("current", current);
+
+        if (current.done) {
+          btn.remove();
+        }
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      });
+    }
+  </script>
+</head>
+
+<body onload="start()">
+
+  <template id="timeline-item">
+    <div class="timeline-item">
+      <div class="timeline-item-content">
+        <h2 class="timeline-date"></h2>
+        <p class="timeline-text"></p>
+        <img class="timeline-img" src="" alt="Imagem ilustrativa">
+      </div>
+    </div>
+  </template>
+
+  <div class="timeline"></div>
+  <div class="area-btn"><button>Iniciar</button></div>
+</body>
+
+</html>

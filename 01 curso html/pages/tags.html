@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- titulo na aba -->
+  <title>Tags HTML</title>
+  <!-- icone na aba -->
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <!-- tag para escrever css interno -->
+  <style>
+    /* comentario dentro de um arquivo css */
+  </style>
+  <!-- a tag link pode ser usada para carregar um arquivo de css externo -->
+  <link rel="stylesheet" href="tags.css">
+  <!-- a tag script é usada para códigos javascript -->
+  <script>
+    // comentario em código de javascript
+    /* outro tipo de comentario de javascript */
+  </script>
+  <!-- a tag script também pode ser usada para carregar um arquivo de código externo -->
+  <script src="arquivo.js"></script>
+</head>
+
+<body>
+  <!-- principais tags -->
+
+  <!-- uma div define um bloco -->
+  <!-- serve para englobar o que você precisar -->
+  <div></div>
+
+
+  <!-- títulos -->
+  <h1>Título</h1>
+  <h2>Título</h2>
+  <h3>Título</h3>
+
+
+  <!-- parágrafos -->
+  <p>Laboris quis nulla duis fugiat dolor fugiat qui fugiat officia non deserunt ea commodo.</p>
+
+
+  <!-- links -->
+  <a href="wttp:\\www.site.com.br" target="_blank">link</a>
+  <!-- 
+    a propriedade target serve para especificar onde a pagina deve abrir
+    padrão = _self
+    outra aba = _blank
+   -->
+  <a href="../index.html">home</a>
+  <a href="outra-pagina.html#ancora">link</a>
+
+
+  <!-- button serve para criar um botão-->
+  <button type="button"></button>
+
+
+  <!-- imagem -->
+  <img src="imagem.jpg" alt="texto alternativo">
+
+  <!-- figure define um envelope para uma imagem e sua descrição -->
+  <figure>
+    <img src="imagem.jpg" alt="texto alternativo">
+    <figcaption>Legenda para a imagem.</figcaption>
+  </figure>
+
+
+  <!-- tabelas -->
+  <!-- 
+    é possível fazer uma célula ocupar mais de 1 linha ou coluna
+    usando as propriedades colspan e rowspan
+  -->
+  <table>
+    <tr>
+      <th>Empresa</th>
+      <th>Contato</th>
+      <th>Pais</th>
+    </tr>
+    <tr>
+      <td>Alfreds Futterkiste</td>
+      <td>Maria Anders</td>
+      <td>Alemanha</td>
+    </tr>
+    <tr>
+      <td>Centro comercial Moctezuma</td>
+      <td>Francisco Chang</td>
+      <td>Mexico</td>
+    </tr>
+  </table>
+
+
+  <!-- listas -->
+  <!-- lista ordenada -->
+  <ol>
+    <li>Café</li>
+    <li>Leite</li>
+    <li>Açúcar</li>
+    <li>Pão</li>
+  </ol>
+  <!-- lista não ordenada -->
+  <ul>
+    <li>Café</li>
+    <li>Leite</li>
+    <li>Açúcar</li>
+    <li>Pão</li>
+  </ul>
+  <!-- é possível criar sub listas adicionando uma lista dentro de outra -->
+  <ul>
+    <li>texto</li>
+    <li>
+      texto com sub texto
+      <ul>
+        <li>sub texto</li>
+        <li>sub texto</li>
+      </ul>
+    </li>
+  </ul>
+
+
+  <!-- tags semânticas -->
+  <!-- header define um cabeçalho de uma pagina -->
+  <header>
+    <h1>Titulo</h1>
+  </header>
+
+  <!-- section serve para definir uma secção em uma pagina -->
+  <!-- semelhante a uma div -->
+  <section></section>
+
+  <!-- nav serve para definir um menu de navegação -->
+  <section>
+    <nav>
+      <ul>
+        <li>
+          <a href="pagina1.html">Página 1</a>
+        </li>
+        <li>
+          <a href="pagina2.html">Página 2</a>
+        </li>
+        <li>
+          <a href="pagina3.html">Página 3</a>
+        </li>
+      </ul>
+    </nav>
+  </section>
+
+  <!-- article define um bloco de conteudo -->
+  <section>
+    <article>
+      Lorem ipsun do reprehenderit deserunt culpa elit fugiat velit. Labore irure occaecat officia voluptate minim
+      sint voluptate incididunt excepteur laborum occaecat sit velit adipisicing. Ut sint et eiusmod sunt culpa tempor
+      sunt ullamco ullamco fugiat eu. Lorem excepteur laboris nulla magna deserunt magna exercitation esse aliquip
+      irure ad excepteur mollit. Ullamco Lorem fugiat adipisicing culpa occaecat exercitation in voluptate. Non nisi
+      esse cupidatat esse fugiat ullamco in do id.
+    </article>
+  </section>
+
+  <!-- aside define um conteudo lateral, como um menu ou uma barra lateral -->
+  <aside>
+    <ol>
+      <li><a href="#cap1">Capitulo 1</a></li>
+      <li><a href="#cap2">Capitulo 2</a></li>
+      <li><a href="#cap3">Capitulo 3</a></li>
+    </ol>
+  </aside>
+
+  <!-- footer define um rodapé de uma pagina -->
+  <footer></footer>
+
+
+  <!-- canvas serve para coisas mais pesadas como gráficos ou games -->
+  <canvas></canvas>
+
+
+  <!-- svg serve para gerar imagens -->
+  <svg width="100" height="100">
+    <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+  </svg>
+
+
+  <!-- video serve para adicionar player de video em uma pagina -->
+  <video width="320" height="240" controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+    Your browser does not support the video tag.
+  </video>
+
+
+  <!-- audio serve para adicionar um player de audio -->
+  <audio controls>
+    <source src="horse.ogg" type="audio/ogg">
+    <source src="horse.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+
+  <!-- iframe serve para exibir outro conteudo/pagina dentro da sua pagina-->
+  <iframe src="index.html" title="descrição"></iframe>
+  <!-- object e embed servem para incluir códigos mais elaborados -->
+  <object data="audi.jpeg"></object>
+  <embed src="audi.jpeg">
+
+
+  <img src="../images/among-us-127.png" width="100px">
+
+
+  <!-- formulários -->
+  <label>
+    <input type="checkbox" name="time" value="time a">
+    time A
+  </label>
+  <br>
+  <input id="timeB" type="checkbox" name="time" value="time b">
+  <label for="timeB">time B</label>
+  <br>
+  <input id="timeC" type="checkbox" name="time" value="time c">
+  <label for="timeC">time C</label>
+  <br>
+  <br>
+  <label>
+    <input type="radio" name="opcao" value="opção a">
+    opção A
+  </label>
+  <br>
+  <input id="opcaoB" type="radio" name="opcao" value="opção b">
+  <label for="opcaoB">opção B</label>
+  <br>
+  <label for="estado">Estado</label>
+  <select id="estado" name="estado">
+    <option value="" selected disabled>Selecione seu estado</option>
+    <optgroup label="região sul">
+      <option value="PR">Paraná</option>
+      <option value="SP">São Paulo</option>
+      <option value="RJ">Rio de Janeiro</option>
+    </optgroup>
+    <optgroup label="região norte">
+      <option value="PR">Paraná</option>
+      <option value="SP">São Paulo</option>
+      <option value="RJ">Rio de Janeiro</option>
+    </optgroup>
+  </select>
+  <br>
+  <label for="texto">Deixe um recado para nós</label>
+  <br>
+  <textarea id="texto" cols="40" rows="10" maxlength="50">
+        este é um textarea
+      </textarea>
+  <br>
+  <label for="txtestado">estado</label>
+  <br>
+  <input type="text" id="txtestado" list="opcoes-estado">
+  <datalist id="opcoes-estado">
+    <option value="Paraná">Paraná</option>
+    <option value="São Paulo">São Paulo</option>
+    <option value="Rio de Janeiro">Rio de Janeiro</option>
+  </datalist>
+
+
+</body>
+
+</html>

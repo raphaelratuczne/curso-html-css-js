@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>colapse</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .example-box {
+      border: #eaeaea solid 1px;
+      border-radius: 5px 5px 0 0;
+      padding: 20px;
+    }
+
+    .collapse-list {
+      margin-bottom: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .collapse-list li {
+      margin-bottom: 10px;
+    }
+
+    .collapse-list .collapse-btn {
+      border: #eaeaea solid 1px;
+      background: #e8e8e8;
+      border-radius: 2px;
+      cursor: pointer;
+      display: block;
+      padding: 5px 10px;
+    }
+
+    .collapse-open {
+      display: none;
+    }
+
+    .collapse-panel {
+      visibility: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .1s, visibility .3s, opacity .3s;
+    }
+
+    .collapse-open:checked~.collapse-panel {
+      max-height: 100%;
+      opacity: 100;
+      visibility: visible;
+    }
+
+    .collapse-list .collapse-inner {
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="example-box">
+    <div class="collapse">
+      <ul class="collapse-list">
+        <li>
+          <label class="collapse-btn" for="collapse-1">Lorem ipsum dolor sit amet</label>
+          <input class="collapse-open" type="checkbox" id="collapse-1" aria-hidden="true" hidden="">
+          <div class="collapse-panel">
+            <div class="collapse-inner">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <label class="collapse-btn" for="collapse-2">Lorem ipsum dolor sit amet</label>
+          <input class="collapse-open" type="checkbox" id="collapse-2" aria-hidden="true" hidden="">
+          <div class="collapse-panel">
+            <div class="collapse-inner">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <label class="collapse-btn" for="collapse-3">Lorem ipsum dolor sit amet</label>
+          <input class="collapse-open" type="checkbox" id="collapse-3" aria-hidden="true" hidden="">
+          <div class="collapse-panel">
+            <div class="collapse-inner">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, non.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

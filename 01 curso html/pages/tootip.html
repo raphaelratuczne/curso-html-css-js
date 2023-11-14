@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tooltip</title>
+  <style>
+    button {
+      position: relative;
+      margin-left: 100px;
+    }
+
+    button:hover::before {
+      content: attr(aria-label);
+      display: block;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #000;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    button:hover::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px;
+      border-style: solid;
+      border-color: #000 transparent transparent transparent;
+    }
+  </style>
+</head>
+
+<body>
+
+  <br />
+  <br />
+  <br />
+  <br />
+  <button aria-label="Texto do tooltip">Meu botão</button>
+
+</body>
+
+</html>

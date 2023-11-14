@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>menu lateral</title>
+  <link href="./fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="./fontawesome/css/brands.css" rel="stylesheet">
+  <link href="./fontawesome/css/solid.css" rel="stylesheet">
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      font-family: 'Roboto', Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+
+    #checkbox,
+    .btn span {
+      /* Hide the checkbox input & word "Menu" in the button */
+      display: none;
+    }
+
+    /* Menu button - starts */
+    .btn {
+      display: block;
+      background-color: #247D9E;
+      color: #fff;
+      width: 55px;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      cursor: pointer;
+      transition: width .3s ease-in-out;
+    }
+
+    /* Menu button - ends */
+
+    /* Sidebar - starts */
+    .sidebar {
+      background-color: #2B2E33;
+      position: fixed;
+      width: 250px;
+      height: 100%;
+      z-index: 1111;
+      transition: transform .3s ease-in-out;
+      transform: translateX(-250px);
+    }
+
+    .sidebar ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    .sidebar ul li a {
+      position: relative;
+      text-decoration: none;
+      display: block;
+      background-color: transparent;
+      color: #BAB5BD;
+      padding: 15px 20px;
+      font-size: 16px;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 15px;
+    }
+
+    /* Add the word "New" to the second item and "2" to the third item */
+    .sidebar ul li:nth-child(2) a::after,
+    .sidebar ul li:nth-child(3) a::after {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      margin-top: -9px;
+      color: #fff;
+      font-size: 13px;
+      padding: 0 7px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+
+    .sidebar ul li:nth-child(2) a::after {
+      content: "New";
+      background-color: tomato;
+    }
+
+    .sidebar ul li:nth-child(3) a::after {
+      content: "2";
+      background-color: #247D9E;
+    }
+
+    /* Add margin to the icon in the second item */
+    .sidebar ul li:nth-child(2) a i {
+      margin-left: 4px;
+      margin-right: 19px;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #161920;
+      color: #fff;
+    }
+
+    .sidebar a:hover::before,
+    .sidebar a.active::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      background-color: #247D9E;
+      width: 4px;
+      height: 100%;
+    }
+
+    /* Sidebar - ends */
+
+    /* Effect of showing the sidebar - starts */
+    #checkbox:checked~.sidebar {
+      transform: translateX(0);
+    }
+
+    #checkbox:checked+.btn {
+      width: 250px;
+      padding: 0 20px;
+    }
+
+    #checkbox:checked+.btn span {
+      /* Show again the word "Menu" in the button */
+      display: inline;
+    }
+
+    /* Effect of showing the sidebar - ends */
+  </style>
+</head>
+
+<body>
+  <input type="checkbox" id="checkbox">
+  <label class="btn" for="checkbox"><i class="fa fa-bars"></i> <span>Menu</span></label>
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="#"><i class="fa fa-tachometer"></i>Dashboard</a></li>
+      <li><a href="#"><i class="fa fa-lightbulb"></i>Widgets</a></li>
+      <li><a href="#"><i class="fa fa-line-chart"></i>Charts</a></li>
+      <li><a href="#" class="active"><i class="fa fa-television"></i>Front-End</a></li>
+      <li><a href="#"><i class="fa-regular fa-envelope"></i>Email</a></li>
+      <li><a href="#"><i class="fa fa-wpforms"></i>Forms</a></li>
+      <li><a href="#"><i class="fa fa-paint-brush"></i>UI Elements</a></li>
+      <li><a href="#"><i class="fa fa-file-text"></i>Pages</a></li>
+      <li><a href="#"><i class="fa fa-globe"></i>Google Maps</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>
