@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .calculator {
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .display {
+      height: 50px;
+      font-size: 24px;
+      text-align: right;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 24%;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      cursor: pointer;
+      margin: 1px auto;
+    }
+
+    button:hover {
+      background-color: #f2f2f2;
+    }
+
+    .x2 {
+      width: 49%;
+    }
+
+    .operator {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <div class="display">0</div>
+    <div class="buttons">
+      <button class="x2" onclick="clearDisplay()">C</button>
+      <button onclick="removeLast()">CE</button>
+      <button onclick="appendToDisplay('/')">/</button>
+      <button class="operator" onclick="appendToDisplay('7')">7</button>
+      <button class="operator" onclick="appendToDisplay('8')">8</button>
+      <button class="operator" onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('*')">*</button>
+      <button class="operator" onclick="appendToDisplay('4')">4</button>
+      <button class="operator" onclick="appendToDisplay('5')">5</button>
+      <button class="operator" onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button class="operator" onclick="appendToDisplay('1')">1</button>
+      <button class="operator" onclick="appendToDisplay('2')">2</button>
+      <button class="operator" onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('+')">+</button>
+      <button class="operator" onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button class="x2" onclick="calculateResult()">=</button>
+    </div>
+  </div>
+  <script>
+    function clearDisplay() {
+      document.querySelector('.display').innerText = '0';
+    }
+
+    function removeLast() {
+      const display = document.querySelector('.display');
+      display.innerText = display.innerText.slice(0, -1);
+    }
+
+    function appendToDisplay(value) {
+      const display = document.querySelector('.display');
+      if (display.innerText === '0' && value !== '.') {
+        display.innerText = value;
+      } else {
+        display.innerText += value;
+      }
+    }
+
+    function calculateResult() {
+      const display = document.querySelector('.display');
+      try {
+        display.innerText = eval(display.innerText);
+      }
+      catch (error) {
+        console.error(error);
+        display.innerText = 'Error';
+      }
+    }
+  </script>
+</body>
+
+</html>
+<!--
+Exercício caixa eletrônico
+Crie um layout para um caixa eletrônico
+Deve ter:
+ - botões para os números
+ - um botão para mostrar o saldo
+ - um botão para adicionar dinheiro
+ - um botão para sacar dinheiro
+ - os botões Enter, Corrigir, e Cancelar.
+Deve iniciar mostrando uma msg para o usuário realizar uma das ações possíveis (visualizar saldo, add dinheiro ou sac dinheiro)
+Ao clicar no botão de saldo, deve mostrar o saldo
+Ao clicar em adicionar, deve solicitar que o usuário digite o valor e clicar em Enter para add
+Ao clicar em sacar, deve pedir para o usuário digitar o valor e clicar em Enter para sub
+Antes de sacar, deve verificar se o usuário possui saldo suficiente, se não possuir, deve mostrar uma mensagem e solicitar um valor menor que o saldo.
+Ao clicar em Corrigir, deve voltar o último número digitado.
+Ao clicar em Cancelar deve anular e voltar para msg inicial.
+O saldo inicial deve ser de R$10000.00
+ -->

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #timer {
+      font-size: 2rem;
+      margin: 20px;
+    }
+  </style>
+  <title>Timer</title>
+</head>
+
+<body>
+  <div id="timer">00:00:00</div>
+  <button id="startButton">Iniciar</button>
+  <button id="stopButton">Parar</button>
+  <button id="resetButton">Resetar</button>
+  <script>
+    let timerInterval;
+    let startTime;
+    let elapsedTime = 0;
+    let isRunning = false;
+
+    function updateTimerDisplay() {
+      const hours = Math.floor(elapsedTime / 3600);
+      const minutes = Math.floor((elapsedTime % 3600) / 60);
+      const seconds = elapsedTime % 60;
+
+      const timerDisplay = document.getElementById('timer');
+      timerDisplay.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (!isRunning) {
+        isRunning = true;
+        startTime = Date.now() - elapsedTime * 1000;
+        timerInterval = setInterval(function () {
+          elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+          updateTimerDisplay();
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      if (isRunning) {
+        isRunning = false;
+        clearInterval(timerInterval);
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      elapsedTime = 0;
+      updateTimerDisplay();
+    }
+
+    document.getElementById('startButton').addEventListener('click', startTimer);
+    document.getElementById('stopButton').addEventListener('click', stopTimer);
+    document.getElementById('resetButton').addEventListener('click', resetTimer);
+  </script>
+</body>
+
+</html>
