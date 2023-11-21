@@ -6,11 +6,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalhes do aluno</title>
   <script src="dist/details.js" type="module"></script>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <p>pagina de detalhes do aluno</p>
-  <a href="index.html">Voltar</a>
+  <div class="container">
+    <h1>Dados do alunos</h1>
+    <a class="voltar" href="index.html">Voltar</a>
+    <div class="detalhes">
+      <div class="foto">
+        <img src="https://via.placeholder.com/150" alt="Foto do aluno">
+      </div>
+      <div class="informacoes">
+        <h2 id="nome">Nome do aluno</h2>
+        <p id="turma">Turma: <span>A</span></p>
+      </div>
+    </div>
+    <table>
+      <tr>
+        <th>Matéria</th>
+        <th colspan="5">Notas</th>
+      </tr>
+      <tbody id="notas">
+        <tr>
+          <td>Matemática</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Português</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <tr>
+        <th>Materia</th>
+        <th>Faltas</th>
+      </tr>
+      <tbody id="faltas">
+        <tr>
+          <td>Matemática</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>Português</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
 </body>
 
 </html>

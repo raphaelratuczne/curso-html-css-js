@@ -110,4 +110,70 @@ body {
       color: #3498db;
     }
   }
+
+  // Estilo para o link "Voltar"
+  .voltar {
+    color: #3498db;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  // Estilo para o contêiner de detalhes
+  .detalhes {
+    display: flex;
+    margin-top: 20px;
+
+    // Estilo para o contêiner de foto
+    .foto {
+      flex: 1;
+
+      img {
+        max-width: 100%;
+        border-radius: 5px;
+      }
+    }
+
+    // Estilo para o contêiner de informações
+    .informacoes {
+      flex: 2;
+      padding: 0 20px;
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 0;
+
+        span {
+          font-weight: bold;
+          color: #3498db;
+        }
+      }
+    }
+  }
+  // Estilo para as tabelas
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  }
 }

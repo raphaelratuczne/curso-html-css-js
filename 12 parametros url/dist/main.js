@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -100,7 +99,7 @@ function createPagination(totalCount, actualPage) {
         a.setAttribute("href", "#");
         a.textContent = String(i);
         if (i === actualPage) {
-            a.classList.add("active");
+            li.classList.add("active");
         }
         else {
             a.onclick = () => getStudents(filtro, i);
@@ -124,6 +123,7 @@ function createPagination(totalCount, actualPage) {
         pagination.appendChild(ul);
     }
 }
+export {};
 /*
 excluia os comandos de export no arquivo de lista de alunos
 excluia os comandos de import do arquivo main.ts

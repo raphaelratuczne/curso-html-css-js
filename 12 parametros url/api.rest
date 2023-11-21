@@ -18,4 +18,10 @@ GET http://127.0.0.1:3500/lista-alunos?_sort=nome&turma=2&nome_like=ana HTTP/1.1
 ###
 GET http://127.0.0.1:3500/lista-turmas HTTP/1.1
 
+###
+GET https://swapi.dev/api/films/ HTTP/1.1
+
+###
+GET https://swapi.dev/api/people/ HTTP/1.1
+
 

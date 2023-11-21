@@ -99,5 +99,55 @@ body {
   font-weight: bold;
   color: #3498db;
 }
+.container .voltar {
+  color: #3498db;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+}
+.container .detalhes {
+  display: flex;
+  margin-top: 20px;
+}
+.container .detalhes .foto {
+  flex: 1;
+}
+.container .detalhes .foto img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+.container .detalhes .informacoes {
+  flex: 2;
+  padding: 0 20px;
+}
+.container .detalhes .informacoes h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.container .detalhes .informacoes p {
+  margin: 0;
+}
+.container .detalhes .informacoes p span {
+  font-weight: bold;
+  color: #3498db;
+}
+.container table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+.container table th,
+.container table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.container table th {
+  background-color: #3498db;
+  color: #fff;
+}
+.container table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
 /*# sourceMappingURL=styles.css.map */

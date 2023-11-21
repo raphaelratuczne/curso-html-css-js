@@ -1,40 +1,4 @@
-interface ITurma {
-  id: number;
-  name: string;
-}
-
-interface INotas {
-  matematica: number[];
-  portugues: number[];
-  historia: number[];
-  geografia: number[];
-  fisica: number[];
-  quimica: number[];
-  linguas: number[];
-}
-
-interface IFaltas {
-  matematica: number;
-  portugues: number;
-  historia: number;
-  geografia: number;
-  fisica: number;
-  quimica: number;
-  linguas: number;
-}
-
-interface IAluno {
-  id: number;
-  nome: string;
-  turma: number;
-  notas: INotas;
-  faltas: IFaltas;
-}
-
-interface IFiltro {
-  id: string;
-  nome: string;
-}
+import { IAluno, IFiltro, ITurma } from "./types";
 
 const filtro: IFiltro = {
   id: "0",
@@ -137,7 +101,7 @@ function createPagination(totalCount: number, actualPage: number) {
     a.setAttribute("href", "#");
     a.textContent = String(i);
     if (i === actualPage) {
-      a.classList.add("active");
+      li.classList.add("active");
     } else {
       a.onclick = () => getStudents(filtro, i);
     }
