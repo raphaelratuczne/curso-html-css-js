@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Usuário</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="dist/form.js" type="module"></script>
+</head>
+
+<body>
+  <h1>Adicionar Usuário</h1>
+  <a class="btn-back" href="index.html">Voltar</a>
+  <form>
+    <label for="nome">Nome <span>*</span></label>
+    <input type="text" name="nome" id="nome">
+    <small>mensagem de erro</small>
+
+    <label for="sobrenome">Sobrenome<span>*</span></label>
+    <input type="text" name="sobrenome" id="sobrenome">
+    <small>mensagem de erro</small>
+
+    <label for="email">E-mail<span>*</span></label>
+    <input type="email" name="email" id="email">
+    <small>mensagem de erro</small>
+
+    <label for="nascimento">Data de nascimento<span>*</span></label>
+    <input type="date" name="nascimento" id="nascimento">
+    <small>mensagem de erro</small>
+
+    <label for="cpf">CPF<span>*</span></label>
+    <input type="text" name="cpf" id="cpf">
+    <small>mensagem de erro</small>
+
+    <label for="celular">Celular<span>*</span></label>
+    <input type="text" name="celular" id="celular">
+    <small>mensagem de erro</small>
+
+    <p>Sexo<span>*</span>:</p>
+    <label class="for-checks">
+      <input type="radio" name="sexo" id="sexo-masc" value="M">
+      Masculino
+    </label>
+    <label class="for-checks">
+      <input type="radio" name="sexo" id="sexo-fem" value="F">
+      Feminino
+    </label>
+    <small>mensagem de erro</small>
+
+    <label class="for-checks">
+      <input type="checkbox" name="receber_ofertas" id="receber-ofertas">
+      Desejo receber ofertas
+    </label>
+
+    <p>Interesses</p>
+    <ul id="lista-departamentos">
+      <!-- <li>
+        <label class="for-checks">
+          <input type="checkbox" name="interesses[]" id="interesse-1" value="1">
+          Telefonia
+        </label>
+      </li>
+      <li>
+        <label class="for-checks">
+          <input type="checkbox" name="interesses[]" id="interesse-2" value="2">
+          Informática
+        </label>
+      </li>
+      <li>
+        <label class="for-checks">
+          <input type="checkbox" name="interesses[]" id="interesse-3" value="3">
+          Eletrodomésticos
+        </label>
+      </li> -->
+    </ul>
+
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+
+</html>
