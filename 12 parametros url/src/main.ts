@@ -57,9 +57,16 @@ async function getStudents({ id, nome }: IFiltro, page = 1) {
   const data = await resp.json();
   createListStudents(data as IAluno[]);
   createPagination(totalCount, page);
+
+  // exemplo para passar o valor de totalCount para o customElement
+  const header = document.querySelector("#id-header");
+  if (header) {
+    console.log("header", header);
+    header.setAttribute("total-count", String(totalCount));
+  }
 }
 
-function createListStudents(students: IAluno[]) {
+export function createListStudents(students: IAluno[]) {
   const listaAlunos = document.querySelector(".lista-alunos");
   let alunos = "";
   if (listaAlunos) {

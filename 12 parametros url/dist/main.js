@@ -59,9 +59,15 @@ function getStudents({ id, nome }, page = 1) {
         const data = yield resp.json();
         createListStudents(data);
         createPagination(totalCount, page);
+        // exemplo para passar o valor de totalCount para o customElement
+        const header = document.querySelector("#id-header");
+        if (header) {
+            console.log("header", header);
+            header.setAttribute("total-count", String(totalCount));
+        }
     });
 }
-function createListStudents(students) {
+export function createListStudents(students) {
     const listaAlunos = document.querySelector(".lista-alunos");
     let alunos = "";
     if (listaAlunos) {
@@ -123,7 +129,6 @@ function createPagination(totalCount, actualPage) {
         pagination.appendChild(ul);
     }
 }
-export {};
 /*
 excluia os comandos de export no arquivo de lista de alunos
 excluia os comandos de import do arquivo main.ts
