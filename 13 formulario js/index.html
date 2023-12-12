@@ -16,6 +16,7 @@
     <table class="table-users">
       <thead>
         <tr>
+          <th>Foto</th>
           <th>Nome</th>
           <th>CPF</th>
           <th>Sexo</th>
@@ -26,6 +27,7 @@
       <tbody>
         <!--
         <tr>
+          <td><a href="#"><img src=""></a></td>
           <td><a href="#">João Neves</a></td>
           <td>123.456.789-01</td>
           <td>Masc</td>
@@ -38,6 +40,19 @@
         -->
       </tbody>
     </table>
+  </div>
+
+  <dialog id="modal">
+    <div class="header-dialog">Excluir usuário</div>
+    <div class="body-dialog">
+      <p>Tem certeza que deseja excluir <b id="nome-excluir"></b>?</p>
+    </div>
+    <div class="footer-dialog">
+      <button class="btn-cancel">Cancelar</button>
+      <button class="btn-confirm">Confirmar</button>
+    </div>
+  </dialog>
+
 </body>
 
 </html>

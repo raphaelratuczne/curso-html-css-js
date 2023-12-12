@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuário</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="dist/user.js" type="module"></script>
+</head>
+
+<body>
+  <h1>Dados do Usuário</h1>
+  <a class="btn-back" href="index.html">Voltar</a>
+  <div class="dados-usuario">
+    <a id="linkEditUser" href="#" class="btn-edit">Editar</a>
+    <div class="clear"></div>
+    <img id="uFoto" src="" alt="User photo" hidden>
+    <p><strong>ID:</strong> <span id="uId"></span></p>
+    <p><strong>Nome:</strong> <span id="uNome"></span></p>
+    <p><strong>E-mail:</strong> <span id="uEmail"></span></p>
+    <p><strong>Data de Nascimento:</strong> <span id="uNasc"></span></p>
+    <p><strong>CPF:</strong> <span id="uCpf"></span></p>
+    <p><strong>Fone:</strong> <span id="uCel"></span></p>
+    <p><strong>genero:</strong> <span id="uSexo"></span></p>
+    <p><strong>Aceita receber ofertas:</strong> <span id="uOfer"></span></p>
+    <p><strong>Interesses:</strong> <span id="uInter"></span></p>
+    <p><strong>Observações:</strong> <span id="uObs"></span></p>
+    <div class="arquivos">
+      <h2>Arquivos</h2>
+      <div id="lista-arquivos">
+        <!-- <div class="arquivo">
+          <p><strong>Nome:</strong> RG</p>
+          <p><strong>Arquivo:</strong> <a href="#">RG.pdf</a></p>
+          <button class="btn-delete">Excluir</button>
+        </div>
+        <div class="arquivo">
+          <p><strong>Nome:</strong> CPF</p>
+          <p><strong>Arquivo:</strong> <a href="#">CPF.pdf</a></p>
+          <button class="btn-delete">Excluir</button>
+        </div> -->
+      </div>
+    </div>
+    <div class="enderecos">
+      <h2>Endereços</h2>
+      <button class="btn-add">Adicionar</button>
+      <div id="lista-enderecos">
+        <!-- <div class="endereco">
+          <p><strong>Identificação:</strong> Casa</p>
+          <p><strong>CEP:</strong> 00000-000</p>
+          <p><strong>Logradouro:</strong> Rua das Flores</p>
+          <p><strong>Número:</strong> 123</p>
+          <p><strong>Complemento:</strong> Casa</p>
+          <p><strong>Bairro:</strong> Centro</p>
+          <p><strong>Cidade:</strong> São Paulo</p>
+          <p><strong>Estado:</strong> SP</p>
+          <button class="btn-edit">Editar</button>
+          <button class="btn-delete">Excluir</button>
+        </div>
+        <div class="endereco">
+          <p><strong>Identificação:</strong> Trabalho</p>
+          <p><strong>CEP:</strong> 00000-000</p>
+          <p><strong>Logradouro:</strong> Rua das Flores</p>
+          <p><strong>Número:</strong> 123</p>
+          <p><strong>Complemento:</strong> Casa</p>
+          <p><strong>Bairro:</strong> Centro</p>
+          <p><strong>Cidade:</strong> São Paulo</p>
+          <p><strong>Estado:</strong> SP</p>
+          <button class="btn-edit">Editar</button>
+          <button class="btn-delete">Excluir</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <dialog id="modal">
+    <div class="header-dialog">Adicionar endereço</div>
+    <div class="body-dialog">
+      <form>
+        <label for="nome">Identificação<span>*</span></label>
+        <input type="text" name="nome" id="nome">
+        <small>mensagem de erro</small>
+
+        <label for="cep">CEP<span>*</span></label>
+        <input type="text" name="cep" id="cep">
+        <small>mensagem de erro</small>
+
+        <label for="rua">Logradouro<span>*</span></label>
+        <input type="text" name="rua" id="rua">
+        <small>mensagem de erro</small>
+
+        <label for="numero">Número<span>*</span></label>
+        <input type="text" name="numero" id="numero">
+        <small>mensagem de erro</small>
+
+        <label for="complemento">Complemento</label>
+        <input type="text" name="complemento" id="complemento">
+
+        <label for="bairro">Bairro<span>*</span></label>
+        <input type="text" name="bairro" id="bairro">
+        <small>mensagem de erro</small>
+
+        <label for="estado">Estado<span>*</span></label>
+        <select name="estado" id="estado">
+          <option value="">Selecione</option>
+          <option value="SP">São Paulo</option>
+          <option value="RJ">Rio de Janeiro</option>
+          <option value="MG">Minas Gerais</option>
+        </select>
+        <small>mensagem de erro</small>
+
+        <label for="cidade">Cidade<span>*</span></label>
+        <select name="cidade" id="cidade">
+          <option value="">Selecione o estado</option>
+        </select>
+        <small>mensagem de erro</small>
+      </form>
+    </div>
+    <div class="footer-dialog">
+      <button class="btn-cancel">Cancelar</button>
+      <button class="btn-confirm">Confirmar</button>
+    </div>
+  </dialog>
+
+</body>
+
+</html>
