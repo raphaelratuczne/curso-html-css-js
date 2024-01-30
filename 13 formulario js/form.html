@@ -6,20 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adicionar Usuário</title>
   <link rel="stylesheet" href="css/styles.css">
-  <script src="dist/form.js" type="module"></script>
+  <script src="dist/form.js" type="module" defer></script>
 </head>
 
 <body>
   <h1>Adicionar Usuário</h1>
   <a class="btn-back" href="javascript:history.go(-1)">Voltar</a>
-  <form>
-    <label for="nome">Nome <span>*</span></label>
-    <input type="text" name="nome" id="nome">
-    <small>mensagem de erro</small>
+  <form method="post" onsubmit="() => false">
+    <div>
+      <label for="nome">Nome <span>*</span></label>
+      <input type="text" name="nome" id="nome">
+      <small></small>
+    </div>
 
-    <label for="sobrenome">Sobrenome<span>*</span></label>
-    <input type="text" name="sobrenome" id="sobrenome">
-    <small>mensagem de erro</small>
+    <div>
+      <label for="sobrenome">Sobrenome<span>*</span></label>
+      <input type="text" name="sobrenome" id="sobrenome">
+      <small></small>
+    </div>
 
     <label for="email">E-mail<span>*</span></label>
     <input type="email" name="email" id="email">
@@ -96,7 +100,7 @@
       </li> -->
     </ul>
 
-    <button type="submit">Enviar</button>
+    <button type="button" id="btnEnviar">Enviar</button>
   </form>
 </body>
 
