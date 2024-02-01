@@ -51,6 +51,13 @@ function validateRequired(input: HTMLInputElement) {
   return true;
 }
 
+function validateMinLength(input: HTMLInputElement, min: number) {
+  if (!input.value || input.value.length < min) {
+    return false;
+  }
+  return true;
+}
+
 function validateEmail(input: HTMLInputElement) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(input.value)) {
@@ -73,7 +80,7 @@ foto: string; // required, text
 observacao: string; // optional, max 255
 */
 function validateForm() {
-  const fields = {
+  const objForm = {
     nome: true,
     sobrenome: true,
     email: true,
@@ -84,12 +91,15 @@ function validateForm() {
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
     // verifica se o nome (obrigatorio) foi inserido
-    if (validateRequired(nome)) {
-      showErrorMsg(nome, "");
-      fields.nome = true;
-    } else {
+    if (!validateRequired(nome)) {
       showErrorMsg(nome, "O nome é obrigatório!");
-      fields.nome = false;
+      objForm.nome = false;
+    } else if (!validateMinLength(nome, 3)) {
+      showErrorMsg(nome, "Digite ao menos 3 letras!");
+      objForm.nome = false;
+    } else {
+      showErrorMsg(nome, "");
+      objForm.nome = true;
     }
   };
   nome.onkeyup = validaNome;
@@ -98,32 +108,39 @@ function validateForm() {
   // 5º cria uma função para validar o campo sobrenome
   const validaSobrenome = () => {
     // verifica se o sobrenome (obrigatorio) foi digitado
-    if (validateRequired(sobrenome)) {
-      showErrorMsg(sobrenome, "");
-      fields.sobrenome = true;
-    } else {
+    if (!validateRequired(sobrenome)) {
       showErrorMsg(sobrenome, "O sobrenome é obrigatório!");
-      fields.sobrenome = false;
+      objForm.sobrenome = false;
+    } else if (!validateMinLength(sobrenome, 3)) {
+      showErrorMsg(sobrenome, "Digite ao menos 3 letras!");
+      objForm.sobrenome = false;
+    } else {
+      showErrorMsg(sobrenome, "");
+      objForm.sobrenome = true;
     }
   };
   sobrenome.onkeyup = validaSobrenome;
   validaSobrenome();
 
   const validaEmail = () => {
-    // verifica se um email valido foi digitado
-    if (validateEmail(email)) {
-      showErrorMsg(email, "");
-      fields.email = true;
+    if (!validateEmail(email)) {
+      showErrorMsg(email, "Insira um e-mail válido");
+      objForm.email = false;
     } else {
-      showErrorMsg(email, "Por favor use um email válido!");
-      fields.email = false;
+      showErrorMsg(email, "");
+      objForm.email = true;
     }
   };
   email.onkeyup = validaEmail;
   validaEmail();
 
-  const isValid = Object.values(fields).every((field) => field);
-  return isValid;
+  // cria um array com os valores desse objeto
+  // [true, true, false, true ...]
+  const arrValores = Object.values(objForm);
+  if (arrValores.includes(false)) {
+    return false;
+  }
+  return true;
 }
 
 function handleSubmit() {
@@ -131,11 +148,10 @@ function handleSubmit() {
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
   if (validateForm()) {
-    console.log("Formulário válido, enviando...");
+    console.log("O formulário é valido, vamos salvar.");
   } else {
-    console.log("Formulário inválido, não enviado!");
+    console.log("O formulário não é valido, vamos corrigir.");
   }
-  // o envio será feito depois da validação (nas proximas aulas)
 }
 
 if (form) {

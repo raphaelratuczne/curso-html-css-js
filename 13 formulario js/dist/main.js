@@ -1,24 +1,13 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 let users = [];
 const modal = document.querySelector("#modal");
 document.querySelector(".btn-cancel").addEventListener("click", () => {
     modal.close();
 });
-function loadUsers() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const resp = yield fetch("http://127.0.0.1:3500/usuarios");
-        users = yield resp.json();
-        console.log("users", users);
-        createListUsers(users);
-    });
+async function loadUsers() {
+    const resp = await fetch("http://localhost:3500/usuarios");
+    users = await resp.json();
+    console.log("users", users);
+    createListUsers(users);
 }
 loadUsers();
 function createListUsers(users) {
