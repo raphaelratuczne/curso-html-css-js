@@ -8,7 +8,7 @@ document.querySelector(".btn-cancel")!.addEventListener("click", () => {
 });
 
 async function loadUsers() {
-  const resp = await fetch("http://127.0.0.1:3500/usuarios");
+  const resp = await fetch("http://localhost:3500/usuarios");
   users = await resp.json();
   console.log("users", users);
   createListUsers(users);

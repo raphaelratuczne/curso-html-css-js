@@ -5,7 +5,7 @@ const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
 
 async function loadDeparts() {
-  const resp = await fetch("http://127.0.0.1:3500/departamentos");
+  const resp = await fetch("http://localhost:3500/departamentos");
   const departamentos: IDeparts[] = await resp.json();
   console.log("departamentos", departamentos);
   createListDeparts(departamentos);
@@ -51,17 +51,45 @@ function validateRequired(input: HTMLInputElement) {
   return true;
 }
 
+function validateEmail(input: HTMLInputElement) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(input.value)) {
+    return false;
+  }
+  return true;
+}
+
+/*
+nome: string; // required, max 50
+sobrenome: string; // required, max 50
+email: string; // required, max 100, email
+nascimento: string; // required, yyyy-mm-dd
+cpf: string; // required, max 11 (somente números)
+celular: string; // required, max 11 (somente números)
+sexo: string; // required, enum[m, f]
+receber_ofertas: boolean; // optional, boolean
+interesses: number[]; // optional, required if receber_ofertas is true
+foto: string; // required, text
+observacao: string; // optional, max 255
+*/
 function validateForm() {
+  const fields = {
+    nome: true,
+    sobrenome: true,
+    email: true,
+  };
   // 3º pega os campos do formulario
-  const { nome, sobrenome } = form!;
+  const { nome, sobrenome, email } = form!;
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
     // verifica se o nome (obrigatorio) foi inserido
     if (validateRequired(nome)) {
       showErrorMsg(nome, "");
+      fields.nome = true;
     } else {
       showErrorMsg(nome, "O nome é obrigatório!");
+      fields.nome = false;
     }
   };
   nome.onkeyup = validaNome;
@@ -72,19 +100,41 @@ function validateForm() {
     // verifica se o sobrenome (obrigatorio) foi digitado
     if (validateRequired(sobrenome)) {
       showErrorMsg(sobrenome, "");
+      fields.sobrenome = true;
     } else {
       showErrorMsg(sobrenome, "O sobrenome é obrigatório!");
+      fields.sobrenome = false;
     }
   };
   sobrenome.onkeyup = validaSobrenome;
   validaSobrenome();
+
+  const validaEmail = () => {
+    // verifica se um email valido foi digitado
+    if (validateEmail(email)) {
+      showErrorMsg(email, "");
+      fields.email = true;
+    } else {
+      showErrorMsg(email, "Por favor use um email válido!");
+      fields.email = false;
+    }
+  };
+  email.onkeyup = validaEmail;
+  validaEmail();
+
+  const isValid = Object.values(fields).every((field) => field);
+  return isValid;
 }
 
 function handleSubmit() {
   // seta a flag para avisar que foi feita uma tentativa de enviar o form
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
-  validateForm();
+  if (validateForm()) {
+    console.log("Formulário válido, enviando...");
+  } else {
+    console.log("Formulário inválido, não enviado!");
+  }
   // o envio será feito depois da validação (nas proximas aulas)
 }
 
