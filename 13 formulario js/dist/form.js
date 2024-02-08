@@ -35,21 +35,58 @@ function showErrorMsg(input, msg) {
     input.parentNode.querySelector("small").textContent = msg;
 }
 // função para validar campos obrigatórios
-function validateRequired(input) {
+function validateRequiredField(input) {
     if (!input.value || input.value.length === 0 || input.value.trim() === "") {
         return false;
     }
     return true;
 }
-function validateMinLength(input, min) {
+function validateMinLengthField(input, min) {
     if (!input.value || input.value.length < min) {
         return false;
     }
     return true;
 }
-function validateEmail(input) {
+function validateEmailField(input) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(input.value)) {
+        return false;
+    }
+    return true;
+}
+function validateDateField(input) {
+    if (input.value) {
+        // pega a data atual usando um objeto Date
+        const dataAtual = new Date();
+        // transforma a data passada em um objeto date
+        const dataNascimento = new Date(input.value);
+        console.log("getTime", dataAtual.getTime());
+        console.log("getFullYear", dataAtual.getFullYear());
+        console.log("getMonth", dataAtual.getMonth());
+        console.log("getDate", dataAtual.getDate());
+        console.log("getDay", dataAtual.getDay());
+        console.log("getHours", dataAtual.getHours());
+        console.log("getMinutes", dataAtual.getMinutes());
+        console.log("getSeconds", dataAtual.getSeconds());
+        console.log("getMilliseconds", dataAtual.getMilliseconds());
+        console.log("getUTCDate", dataAtual.getUTCDate());
+        console.log("toUTCString", dataAtual.toUTCString());
+        console.log("toISOString", dataAtual.toISOString());
+        console.log("toJSON", dataAtual.toJSON());
+        console.log("toString", dataAtual.toString());
+        console.log("toDateString", dataAtual.toDateString());
+        console.log("toTimeString", dataAtual.toTimeString());
+        console.log("toLocaleDateString", dataAtual.toLocaleDateString("pt-BR")); // ko-KR, pt-BR, en-US
+        console.log("toLocaleTimeString", dataAtual.toLocaleTimeString("pt-BR"));
+        // verifica se a data passada é anterior a data de hoje
+        if (dataNascimento.getTime() >= dataAtual.getTime()) {
+            console.log("A data de nascimento é maior que a data atual");
+        }
+        // adiciona 25 dias a data atual
+        dataAtual.setDate(dataAtual.getDate() + 25);
+        console.log("data atual + 25 dias", dataAtual.toLocaleDateString("pt-BR"));
+    }
+    if (!input.value) {
         return false;
     }
     return true;
@@ -72,17 +109,18 @@ function validateForm() {
         nome: true,
         sobrenome: true,
         email: true,
+        nascimento: true,
     };
     // 3º pega os campos do formulario
-    const { nome, sobrenome, email } = form;
+    const { nome, sobrenome, email, nascimento } = form;
     // 4º cria uma função para validar o campo nome
     const validaNome = () => {
         // verifica se o nome (obrigatorio) foi inserido
-        if (!validateRequired(nome)) {
+        if (!validateRequiredField(nome)) {
             showErrorMsg(nome, "O nome é obrigatório!");
             objForm.nome = false;
         }
-        else if (!validateMinLength(nome, 3)) {
+        else if (!validateMinLengthField(nome, 3)) {
             showErrorMsg(nome, "Digite ao menos 3 letras!");
             objForm.nome = false;
         }
@@ -96,11 +134,11 @@ function validateForm() {
     // 5º cria uma função para validar o campo sobrenome
     const validaSobrenome = () => {
         // verifica se o sobrenome (obrigatorio) foi digitado
-        if (!validateRequired(sobrenome)) {
+        if (!validateRequiredField(sobrenome)) {
             showErrorMsg(sobrenome, "O sobrenome é obrigatório!");
             objForm.sobrenome = false;
         }
-        else if (!validateMinLength(sobrenome, 3)) {
+        else if (!validateMinLengthField(sobrenome, 3)) {
             showErrorMsg(sobrenome, "Digite ao menos 3 letras!");
             objForm.sobrenome = false;
         }
@@ -112,7 +150,7 @@ function validateForm() {
     sobrenome.onkeyup = validaSobrenome;
     validaSobrenome();
     const validaEmail = () => {
-        if (!validateEmail(email)) {
+        if (!validateEmailField(email)) {
             showErrorMsg(email, "Insira um e-mail válido");
             objForm.email = false;
         }
@@ -123,6 +161,18 @@ function validateForm() {
     };
     email.onkeyup = validaEmail;
     validaEmail();
+    const validaNascimento = () => {
+        if (!validateDateField(nascimento)) {
+            showErrorMsg(nascimento, "Insira uma data válida");
+            objForm.nascimento = false;
+        }
+        else {
+            showErrorMsg(nascimento, "");
+            objForm.nascimento = true;
+        }
+    };
+    nascimento.onchange = validaNascimento;
+    validaNascimento();
     // cria um array com os valores desse objeto
     // [true, true, false, true ...]
     const arrValores = Object.values(objForm);
