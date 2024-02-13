@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
+const cpf = document.querySelector("#cpf");
 async function loadDeparts() {
     const resp = await fetch("http://localhost:3500/departamentos");
     const departamentos = await resp.json();
@@ -30,6 +31,18 @@ function createListDeparts(departs) {
 //* Reade
 //* Update
 //* Delete
+// mascara para cpf
+function maskCPF(cpf) {
+    let value = cpf.value;
+    // remove tudo que não é número
+    value = value.replace(/\D/g, "").slice(0, 11);
+    // mascara o numero como xxx.xxx.xxx-xx
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    cpf.value = value;
+}
+cpf.addEventListener("keyup", () => maskCPF(cpf));
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input, msg) {
     input.parentNode.querySelector("small").textContent = msg;
@@ -58,35 +71,69 @@ function validateDateField(input) {
     if (input.value) {
         // pega a data atual usando um objeto Date
         const dataAtual = new Date();
+        console.log("dataAtual", dataAtual);
         // transforma a data passada em um objeto date
         const dataNascimento = new Date(input.value);
-        console.log("getTime", dataAtual.getTime());
-        console.log("getFullYear", dataAtual.getFullYear());
-        console.log("getMonth", dataAtual.getMonth());
-        console.log("getDate", dataAtual.getDate());
-        console.log("getDay", dataAtual.getDay());
-        console.log("getHours", dataAtual.getHours());
-        console.log("getMinutes", dataAtual.getMinutes());
-        console.log("getSeconds", dataAtual.getSeconds());
-        console.log("getMilliseconds", dataAtual.getMilliseconds());
-        console.log("getUTCDate", dataAtual.getUTCDate());
-        console.log("toUTCString", dataAtual.toUTCString());
-        console.log("toISOString", dataAtual.toISOString());
-        console.log("toJSON", dataAtual.toJSON());
-        console.log("toString", dataAtual.toString());
-        console.log("toDateString", dataAtual.toDateString());
-        console.log("toTimeString", dataAtual.toTimeString());
-        console.log("toLocaleDateString", dataAtual.toLocaleDateString("pt-BR")); // ko-KR, pt-BR, en-US
-        console.log("toLocaleTimeString", dataAtual.toLocaleTimeString("pt-BR"));
+        console.log("dataNascimento", dataNascimento);
+        // console.log("getTime", dataAtual.getTime());
+        // console.log("getFullYear", dataAtual.getFullYear());
+        // console.log("getMonth", dataAtual.getMonth());
+        // console.log("getDate", dataAtual.getDate());
+        // console.log("getDay", dataAtual.getDay());
+        // console.log("getHours", dataAtual.getHours());
+        // console.log("getMinutes", dataAtual.getMinutes());
+        // console.log("getSeconds", dataAtual.getSeconds());
+        // console.log("getMilliseconds", dataAtual.getMilliseconds());
+        // console.log("getUTCDate", dataAtual.getUTCDate());
+        // console.log("toUTCString", dataAtual.toUTCString());
+        // console.log("toISOString", dataAtual.toISOString());
+        // console.log("toJSON", dataAtual.toJSON());
+        // console.log("toString", dataAtual.toString());
+        // console.log("toDateString", dataAtual.toDateString());
+        // console.log("toTimeString", dataAtual.toTimeString());
+        // console.log("toLocaleDateString", dataAtual.toLocaleDateString("pt-BR")); // ko-KR, pt-BR, en-US
+        // console.log("toLocaleTimeString", dataAtual.toLocaleTimeString("pt-BR"));
         // verifica se a data passada é anterior a data de hoje
-        if (dataNascimento.getTime() >= dataAtual.getTime()) {
-            console.log("A data de nascimento é maior que a data atual");
-        }
+        // if (dataNascimento.getTime() >= dataAtual.getTime()) {
+        //   console.log("A data de nascimento é maior que a data atual");
+        // }
         // adiciona 25 dias a data atual
-        dataAtual.setDate(dataAtual.getDate() + 25);
-        console.log("data atual + 25 dias", dataAtual.toLocaleDateString("pt-BR"));
+        // dataAtual.setDate(dataAtual.getDate() + 25);
+        // console.log("data atual + 25 dias", dataAtual.toLocaleDateString("pt-BR"));
+        // ajusta o timezone da data de nascimento
+        const timezone = dataAtual.getTimezoneOffset();
+        console.log("getTimezoneOffset", timezone);
+        dataNascimento.setMinutes(dataNascimento.getMinutes() + timezone);
+        console.log("dataNascimento", dataNascimento);
     }
     if (!input.value) {
+        return false;
+    }
+    return true;
+}
+function validateCPF(cpf) {
+    let value = cpf.value.replace(/\D/g, "").slice(0, 11);
+    let Soma;
+    let Resto;
+    Soma = 0;
+    if (value == "00000000000")
+        return false;
+    for (let i = 1; i <= 9; i++) {
+        Soma = Soma + parseInt(value.substring(i - 1, i)) * (11 - i);
+    }
+    Resto = (Soma * 10) % 11;
+    if (Resto == 10 || Resto == 11)
+        Resto = 0;
+    if (Resto != parseInt(value.substring(9, 10)))
+        return false;
+    Soma = 0;
+    for (let i = 1; i <= 10; i++) {
+        Soma = Soma + parseInt(value.substring(i - 1, i)) * (12 - i);
+    }
+    Resto = (Soma * 10) % 11;
+    if (Resto == 10 || Resto == 11)
+        Resto = 0;
+    if (Resto != parseInt(value.substring(10, 11))) {
         return false;
     }
     return true;
@@ -110,9 +157,10 @@ function validateForm() {
         sobrenome: true,
         email: true,
         nascimento: true,
+        cpf: true,
     };
     // 3º pega os campos do formulario
-    const { nome, sobrenome, email, nascimento } = form;
+    const { nome, sobrenome, email, nascimento, cpf } = form;
     // 4º cria uma função para validar o campo nome
     const validaNome = () => {
         // verifica se o nome (obrigatorio) foi inserido
@@ -173,6 +221,18 @@ function validateForm() {
     };
     nascimento.onchange = validaNascimento;
     validaNascimento();
+    const validaCpf = () => {
+        if (!validateCPF(cpf)) {
+            showErrorMsg(cpf, "Insira um CPF válido!");
+            objForm.cpf = false;
+        }
+        else {
+            showErrorMsg(cpf, "");
+            objForm.cpf = true;
+        }
+    };
+    cpf.onkeyup = validaCpf;
+    validaCpf();
     // cria um array com os valores desse objeto
     // [true, true, false, true ...]
     const arrValores = Object.values(objForm);
