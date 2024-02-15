@@ -3,6 +3,7 @@ import { IDeparts } from "./types";
 const form = document.querySelector("form");
 const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
+const cpf = document.querySelector("#cpf") as HTMLInputElement;
 
 async function loadDeparts() {
   const resp = await fetch("http://localhost:3500/departamentos");
@@ -38,6 +39,19 @@ function createListDeparts(departs: IDeparts[]) {
 //* Update
 //* Delete
 
+// mascara para cpf
+function maskCPF(cpf: HTMLInputElement) {
+  let value = cpf.value;
+  // remove tudo que não é numero
+  value = value.replace(/\D/g, "").slice(0, 11);
+  // mascara o numero como xxx.xxx.xxx-xx
+  value = value.replace(/(\d{3})(\d)/, "$1.$2");
+  value = value.replace(/(\d{3})(\d)/, "$1.$2");
+  value = value.replace(/(\d{3})(\d{1,2})/, "$1-$2");
+  cpf.value = value;
+}
+cpf.addEventListener("keyup", () => maskCPF(cpf));
+
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input: HTMLInputElement, msg: string) {
   input.parentNode!.querySelector("small")!.textContent = msg;
@@ -66,6 +80,88 @@ function validateEmail(input: HTMLInputElement) {
   return true;
 }
 
+function validateDate(input: HTMLInputElement) {
+  if (input.value) {
+    const dataAtual = new Date();
+    console.log("dataAtual", dataAtual);
+    // console.log("getTime", dataAtual.getTime());
+    // console.log("getFullYear", dataAtual.getFullYear());
+    // console.log("getMonth", dataAtual.getMonth());
+    // console.log("getDate", dataAtual.getDate());
+    // console.log("getDay", dataAtual.getDay());
+    // console.log("getHours", dataAtual.getHours());
+    // console.log("getMinutes", dataAtual.getMinutes());
+    // console.log("getSeconds", dataAtual.getSeconds());
+    // console.log("getMilliseconds", dataAtual.getMilliseconds());
+    // console.log("getUTCDate", dataAtual.getUTCDate());
+    // console.log("toUTCString", dataAtual.toUTCString());
+    // console.log("toISOString", dataAtual.toISOString());
+    // console.log("toJSON", dataAtual.toJSON());
+    // console.log("toString", dataAtual.toString());
+    // console.log("toDateString", dataAtual.toDateString());
+    // console.log("toTimeString", dataAtual.toTimeString());
+    // console.log("toLocaleDateString", dataAtual.toLocaleDateString("pt-BR")); // ko-KR, pt-BR, en-US
+    // console.log("toLocaleTimeString", dataAtual.toLocaleTimeString("pt-BR"));
+
+    const dataNascimento = new Date(input.value); // yyyy-mm-dd
+    console.log("dataNascimento", dataNascimento);
+    // if (dataNascimento.getTime() > dataAtual.getTime()) {
+    //   console.log("A data de nascimento é maior que a data de hj");
+    // }
+
+    // vou adicionar 20 dias na data atual
+    // const novoDia = dataAtual.getDate() + 20;
+    // dataAtual.setDate(novoDia);
+    // console.log("data atual + 20 dias", dataAtual.toLocaleDateString("pt-BR"));
+
+    // como corrigir o timestamp de uma data setada yyyy-mm-dd
+    const timestamp = dataAtual.getTimezoneOffset();
+    console.log("timestamp", timestamp);
+    dataNascimento.setMinutes(dataNascimento.getMinutes() + timestamp);
+    console.log("data de nascimento com timestamp corrigida", dataNascimento);
+  }
+
+  if (!input.value) {
+    return false;
+  }
+  return true;
+}
+
+function validateCpf(input: HTMLInputElement) {
+  let value = input.value.replace(/\D/g, "").slice(0, 11);
+  let Soma = 0;
+  let Resto;
+
+  if (value == "00000000000") return false;
+
+  for (let i = 1; i <= 9; i++) {
+    Soma = Soma + parseInt(value.substring(i - 1, i)) * (11 - i);
+  }
+  Resto = (Soma * 10) % 11;
+
+  if (Resto == 10 || Resto == 11) {
+    Resto = 0;
+  }
+  if (Resto != parseInt(value.substring(9, 10))) {
+    return false;
+  }
+
+  Soma = 0;
+  for (let i = 1; i <= 10; i++) {
+    Soma = Soma + parseInt(value.substring(i - 1, i)) * (12 - i);
+  }
+  Resto = (Soma * 10) % 11;
+
+  if (Resto == 10 || Resto == 11) {
+    Resto = 0;
+  }
+  if (Resto != parseInt(value.substring(10, 11))) {
+    return false;
+  }
+
+  return true;
+}
+
 /*
 nome: string; // required, max 50
 sobrenome: string; // required, max 50
@@ -84,13 +180,15 @@ function validateForm() {
     nome: true,
     sobrenome: true,
     email: true,
+    nascimento: true,
+    cpf: true,
   };
-  // 3º pega os campos do formulario
-  const { nome, sobrenome, email } = form!;
+  // 3º pega os campos do formulário
+  const { nome, sobrenome, email, nascimento, cpf } = form!;
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
-    // verifica se o nome (obrigatorio) foi inserido
+    // verifica se o nome (obrigatório) foi inserido
     if (!validateRequired(nome)) {
       showErrorMsg(nome, "O nome é obrigatório!");
       objForm.nome = false;
@@ -133,6 +231,30 @@ function validateForm() {
   };
   email.onkeyup = validaEmail;
   validaEmail();
+
+  const validaNascimento = () => {
+    if (!validateDate(nascimento)) {
+      showErrorMsg(nascimento, "Insira uma data válida");
+      objForm.nascimento = false;
+    } else {
+      showErrorMsg(nascimento, "");
+      objForm.nascimento = true;
+    }
+  };
+  nascimento.onchange = validaNascimento;
+  validaNascimento();
+
+  const validaCpf = () => {
+    if (!validateCpf(cpf)) {
+      showErrorMsg(cpf, "Insira um cpf válido");
+      objForm.cpf = false;
+    } else {
+      showErrorMsg(cpf, "");
+      objForm.cpf = true;
+    }
+  };
+  cpf.onkeyup = validaCpf;
+  validaCpf();
 
   // cria um array com os valores desse objeto
   // [true, true, false, true ...]
