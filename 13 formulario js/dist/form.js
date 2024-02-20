@@ -2,6 +2,7 @@ const form = document.querySelector("form");
 const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
 const cpf = document.querySelector("#cpf");
+const celular = document.querySelector("#celular");
 async function loadDeparts() {
     const resp = await fetch("http://localhost:3500/departamentos");
     const departamentos = await resp.json();
@@ -43,9 +44,25 @@ function maskCPF(cpf) {
     cpf.value = value;
 }
 cpf.addEventListener("keyup", () => maskCPF(cpf));
+// mascara para cpf
+function maskCelPhone(celular) {
+    let value = celular.value;
+    // remove tudo que não é numero
+    value = value.replace(/\D/g, "").slice(0, 11);
+    // mascara o numero como (xx) xxxxx-xxxx
+    value = value.replace(/(\d{2})(\d)/, "($1) $2");
+    value = value.replace(/(\d{5})(\d)/, "$1-$2");
+    celular.value = value;
+}
+celular.addEventListener("keyup", () => maskCelPhone(celular));
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input, msg) {
     input.parentNode.querySelector("small").textContent = msg;
+}
+// função para exibir uma msg de erro no campo small para campos radio
+function showErrorMsgRadio(listRadios, msg) {
+    listRadios[0].parentNode.parentNode.querySelector("small").textContent =
+        msg;
 }
 // função para validar campos obrigatórios
 function validateRequired(input) {
@@ -63,6 +80,19 @@ function validateMinLength(input, min) {
 function validateEmail(input) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(input.value)) {
+        return false;
+    }
+    return true;
+}
+function validateCelPhone(input) {
+    const value = input.value.replace(/\D/g, "");
+    if (value.length !== 11) {
+        return false;
+    }
+    return true;
+}
+function validateRadios(input) {
+    if (!input.value) {
         return false;
     }
     return true;
@@ -158,9 +188,11 @@ function validateForm() {
         email: true,
         nascimento: true,
         cpf: true,
+        celular: true,
+        sexo: true,
     };
     // 3º pega os campos do formulário
-    const { nome, sobrenome, email, nascimento, cpf } = form;
+    const { nome, sobrenome, email, nascimento, cpf, celular, sexo } = form;
     // 4º cria uma função para validar o campo nome
     const validaNome = () => {
         // verifica se o nome (obrigatório) foi inserido
@@ -233,6 +265,30 @@ function validateForm() {
     };
     cpf.onkeyup = validaCpf;
     validaCpf();
+    const validaCelPhone = () => {
+        if (!validateCelPhone(celular)) {
+            showErrorMsg(celular, "Insira um telefone válido");
+            objForm.celular = false;
+        }
+        else {
+            showErrorMsg(celular, "");
+            objForm.celular = true;
+        }
+    };
+    celular.onkeyup = validaCelPhone;
+    validaCelPhone();
+    const validaSexo = () => {
+        if (!validateRadios(sexo)) {
+            showErrorMsgRadio(sexo, "Selecione seu sexo");
+            objForm.sexo = false;
+        }
+        else {
+            showErrorMsgRadio(sexo, "");
+            objForm.sexo = true;
+        }
+    };
+    sexo[0].parentNode.parentNode.onchange = validaSexo;
+    validaSexo();
     // cria um array com os valores desse objeto
     // [true, true, false, true ...]
     const arrValores = Object.values(objForm);
