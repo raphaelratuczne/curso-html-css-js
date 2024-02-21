@@ -171,6 +171,12 @@ form {
     transform: translateY(2px);
   }
 
+  #preview {
+    img {
+      max-width: 100px;
+    }
+  }
+
   ul {
     list-style: none;
     padding: 0;
