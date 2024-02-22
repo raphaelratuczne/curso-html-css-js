@@ -149,6 +149,9 @@ form input[type=checkbox] {
   margin-right: 5px;
   transform: translateY(2px);
 }
+form #preview img {
+  max-width: 100px;
+}
 form ul {
   list-style: none;
   padding: 0;

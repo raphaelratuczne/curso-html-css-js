@@ -62,9 +62,13 @@
       <small></small>
     </fieldset>
 
-    <label for="foto">Foto<span>*</span>:</label>
-    <input type="file" name="foto" id="foto">
-    <small>mensagem de erro</small>
+    <div>
+      <label for="foto">Foto<span>*</span>:</label>
+      <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png">
+      <small></small>
+    </div>
+
+    <div id="preview"></div>
 
     <label for="arquivos">Arquivos<span>*</span>:</label>
     <input type="file" name="arquivos" id="arquivos" multiple hidden>

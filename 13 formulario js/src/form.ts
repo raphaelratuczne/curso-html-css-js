@@ -5,6 +5,8 @@ const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
 const cpf = document.querySelector("#cpf") as HTMLInputElement;
 const celular = document.querySelector("#celular") as HTMLInputElement;
+const foto = document.querySelector("#foto") as HTMLInputElement;
+const preview = document.querySelector("#preview") as HTMLInputElement;
 
 async function loadDeparts() {
   const resp = await fetch("http://localhost:3500/departamentos");
@@ -64,6 +66,19 @@ function maskCelPhone(celular: HTMLInputElement) {
   celular.value = value;
 }
 celular.addEventListener("keyup", () => maskCelPhone(celular));
+
+foto.addEventListener("change", () => {
+  preview.innerHTML = "";
+  if (foto.files && foto.files.length) {
+    const img = document.createElement("img");
+    preview.appendChild(img);
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      img.src = e.target!.result as string;
+    };
+    reader.readAsDataURL(foto.files[0]);
+  }
+});
 
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input: HTMLInputElement, msg: string) {
@@ -196,6 +211,18 @@ function validateCpf(input: HTMLInputElement) {
   return true;
 }
 
+function validateImage(input: HTMLInputElement) {
+  // const file = input.files![0];
+  // console.log("name", file.name);
+  // console.log("size", file.size);
+  // console.log("type", file.type);
+  const n = input.files?.length;
+  if (!n) {
+    return false;
+  }
+  return true;
+}
+
 /*
 nome: string; // required, max 50
 sobrenome: string; // required, max 50
@@ -218,9 +245,11 @@ function validateForm() {
     cpf: true,
     celular: true,
     sexo: true,
+    foto: true,
   };
   // 3º pega os campos do formulário
-  const { nome, sobrenome, email, nascimento, cpf, celular, sexo } = form!;
+  const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto } =
+    form!;
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
@@ -315,6 +344,18 @@ function validateForm() {
   };
   sexo[0].parentNode.parentNode.onchange = validaSexo;
   validaSexo();
+
+  const validaFoto = () => {
+    if (!validateImage(foto)) {
+      showErrorMsg(foto, "Selecione uma foto.");
+      objForm.foto = false;
+    } else {
+      showErrorMsg(foto, "");
+      objForm.foto = true;
+    }
+  };
+  foto.onchange = validaFoto;
+  validaFoto();
 
   // cria um array com os valores desse objeto
   // [true, true, false, true ...]
