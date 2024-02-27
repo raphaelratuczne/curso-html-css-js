@@ -166,7 +166,7 @@ form ul li label {
 form ul li label input[type=checkbox] {
   margin-right: 5px;
 }
-form #lista-arquivos {
+form .lista-arquivos {
   background-color: #ecebeb;
   border-radius: 5px;
   display: flex;
@@ -175,14 +175,15 @@ form #lista-arquivos {
   justify-content: center;
   align-items: center;
   padding: 10px;
+  cursor: pointer;
 }
-form #lista-arquivos p {
+form .lista-arquivos p {
   text-align: center;
 }
-form #lista-arquivos ul {
+form .lista-arquivos ul {
   width: 100%;
 }
-form #lista-arquivos li {
+form .lista-arquivos li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -190,7 +191,7 @@ form #lista-arquivos li {
   padding: 3px;
   border-bottom: 1px solid #bdbcbc;
 }
-form #lista-arquivos .btn-delete-file {
+form .lista-arquivos .btn-delete-file {
   background-color: #f44336;
   color: #fff;
   border: none;
@@ -199,7 +200,7 @@ form #lista-arquivos .btn-delete-file {
   cursor: pointer;
   margin-top: 0px;
 }
-form #lista-arquivos .btn-delete-file:hover {
+form .lista-arquivos .btn-delete-file:hover {
   background-color: #d32f2f;
 }
 form button {
