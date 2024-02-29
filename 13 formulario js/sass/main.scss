@@ -195,7 +195,7 @@ form {
     }
   }
 
-  #lista-arquivos {
+  .lista-arquivos {
     background-color: #ecebeb;
     border-radius: 5px;
     display: flex;
@@ -204,6 +204,7 @@ form {
     justify-content: center;
     align-items: center;
     padding: 10px;
+    cursor: pointer;
 
     p {
       text-align: center;

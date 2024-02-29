@@ -70,18 +70,20 @@
 
     <div id="preview"></div>
 
-    <label for="arquivos">Arquivos<span>*</span>:</label>
-    <input type="file" name="arquivos" id="arquivos" multiple hidden>
-    <div id="lista-arquivos">
-      <p>Arraste e solte os arquivos aqui ou clique para selecionar:</p>
-      <ul>
-        <li>
-          <span>arquivo.pdf</span>
-          <button class="btn-delete-file">x</button>
-        </li>
-      </ul>
+    <div>
+      <label for="arquivos">Arquivos<span>*</span>:</label>
+      <input type="file" name="arquivos" id="arquivos" multiple hidden>
+      <div class="lista-arquivos" id="drop-zone">
+        <p>Arraste e solte os arquivos aqui ou clique para selecionar:</p>
+        <ul>
+          <!-- <li>
+            <span>arquivo.pdf</span>
+            <button class="btn-delete-file">x</button>
+          </li> -->
+        </ul>
+      </div>
+      <small></small>
     </div>
-    <small>mensagem de erro</small>
 
     <label for="observacao">Observações:</label>
     <textarea name="observacao" id="observacao"></textarea>

@@ -7,6 +7,8 @@ const cpf = document.querySelector("#cpf") as HTMLInputElement;
 const celular = document.querySelector("#celular") as HTMLInputElement;
 const foto = document.querySelector("#foto") as HTMLInputElement;
 const preview = document.querySelector("#preview") as HTMLInputElement;
+const dropZone = document.querySelector("#drop-zone") as HTMLDivElement;
+const arquivos = document.querySelector("#arquivos") as HTMLInputElement;
 
 async function loadDeparts() {
   const resp = await fetch("http://localhost:3500/departamentos");
@@ -79,6 +81,80 @@ foto.addEventListener("change", () => {
     reader.readAsDataURL(foto.files[0]);
   }
 });
+
+dropZone.addEventListener("dragover", (ev: DragEvent) => {
+  ev.preventDefault();
+  ev.dataTransfer!.dropEffect = "copy";
+  ev.dataTransfer!.effectAllowed = "all";
+});
+
+dropZone.addEventListener("drop", (ev: DragEvent) => {
+  console.log("drop", ev);
+  console.log("files", ev.dataTransfer?.files);
+  ev.preventDefault();
+  if (ev.dataTransfer?.files.length) {
+    console.log("adicionar arquivos");
+    arquivos.files = ev.dataTransfer?.files;
+
+    const event = new Event("change");
+    arquivos.dispatchEvent(event);
+    // listaArquivos();
+  }
+});
+
+dropZone.addEventListener("click", () => {
+  arquivos.click();
+});
+
+function removeFile(name: string) {
+  console.log("removeFile", name);
+  const dt = new DataTransfer();
+  for (const arquivo of [...arquivos.files!]) {
+    if (arquivo.name !== name) {
+      dt.items.add(arquivo);
+    }
+  }
+  arquivos.files = dt.files;
+
+  const event = new Event("change");
+  arquivos.dispatchEvent(event);
+  // listaArquivos();
+}
+
+function listaArquivos() {
+  console.log("files", arquivos.files);
+  // <li>
+  //   <span>arquivo.pdf</span>
+  //   <button class="btn-delete-file">x</button>
+  // </li>
+  const ul = dropZone.querySelector("ul");
+  ul!.innerHTML = "";
+  if (arquivos.files?.length) {
+    // [...arquivos.files].forEach((arquivo) => {arquivo})
+    // for (const arquivo of [...arquivos.files]) {arquivo}
+    // for (const i in [...arquivos.files]) {arquivos.files[i]}
+
+    for (let i = 0; i < arquivos.files.length; i++) {
+      const li = document.createElement("li");
+      const span = document.createElement("span");
+      span.textContent = arquivos.files[i].name;
+      const button = document.createElement("button");
+      button.classList.add("btn-delete-file");
+      button.textContent = "X";
+      button.dataset.name = arquivos.files![i].name;
+      button.addEventListener("click", (ev: Event) => {
+        ev.stopPropagation();
+        const target = ev.target as HTMLButtonElement;
+        removeFile(target.dataset!.name!);
+      });
+      li.appendChild(span);
+      li.appendChild(button);
+      ul?.appendChild(li);
+    }
+  }
+}
+
+arquivos.addEventListener("change", listaArquivos);
 
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input: HTMLInputElement, msg: string) {
@@ -211,7 +287,7 @@ function validateCpf(input: HTMLInputElement) {
   return true;
 }
 
-function validateImage(input: HTMLInputElement) {
+function validateFiles(input: HTMLInputElement) {
   // const file = input.files![0];
   // console.log("name", file.name);
   // console.log("size", file.size);
@@ -246,10 +322,21 @@ function validateForm() {
     celular: true,
     sexo: true,
     foto: true,
+    arquivos: true,
   };
   // 3º pega os campos do formulário
-  const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto } =
-    form!;
+  const {
+    nome,
+    sobrenome,
+    email,
+    nascimento,
+    cpf,
+    celular,
+    sexo,
+    foto,
+    arquivos,
+  } = form!;
+  console.log("arquivos", arquivos.files);
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
@@ -346,7 +433,7 @@ function validateForm() {
   validaSexo();
 
   const validaFoto = () => {
-    if (!validateImage(foto)) {
+    if (!validateFiles(foto)) {
       showErrorMsg(foto, "Selecione uma foto.");
       objForm.foto = false;
     } else {
@@ -356,6 +443,18 @@ function validateForm() {
   };
   foto.onchange = validaFoto;
   validaFoto();
+
+  const validaArquivos = () => {
+    if (!validateFiles(arquivos)) {
+      showErrorMsg(arquivos, "Selecione ao menos 1 arquivo.");
+      objForm.arquivos = false;
+    } else {
+      showErrorMsg(arquivos, "");
+      objForm.arquivos = true;
+    }
+  };
+  arquivos.onchange = validaArquivos;
+  validaArquivos();
 
   // cria um array com os valores desse objeto
   // [true, true, false, true ...]

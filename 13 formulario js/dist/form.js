@@ -5,6 +5,8 @@ const cpf = document.querySelector("#cpf");
 const celular = document.querySelector("#celular");
 const foto = document.querySelector("#foto");
 const preview = document.querySelector("#preview");
+const dropZone = document.querySelector("#drop-zone");
+const arquivos = document.querySelector("#arquivos");
 async function loadDeparts() {
     const resp = await fetch("http://localhost:3500/departamentos");
     const departamentos = await resp.json();
@@ -69,6 +71,73 @@ foto.addEventListener("change", () => {
         reader.readAsDataURL(foto.files[0]);
     }
 });
+dropZone.addEventListener("dragover", (ev) => {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "copy";
+    ev.dataTransfer.effectAllowed = "all";
+});
+dropZone.addEventListener("drop", (ev) => {
+    var _a, _b, _c;
+    console.log("drop", ev);
+    console.log("files", (_a = ev.dataTransfer) === null || _a === void 0 ? void 0 : _a.files);
+    ev.preventDefault();
+    if ((_b = ev.dataTransfer) === null || _b === void 0 ? void 0 : _b.files.length) {
+        console.log("adicionar arquivos");
+        arquivos.files = (_c = ev.dataTransfer) === null || _c === void 0 ? void 0 : _c.files;
+        const event = new Event("change");
+        arquivos.dispatchEvent(event);
+        // listaArquivos();
+    }
+});
+dropZone.addEventListener("click", () => {
+    arquivos.click();
+});
+function removeFile(name) {
+    console.log("removeFile", name);
+    const dt = new DataTransfer();
+    for (const arquivo of [...arquivos.files]) {
+        if (arquivo.name !== name) {
+            dt.items.add(arquivo);
+        }
+    }
+    arquivos.files = dt.files;
+    const event = new Event("change");
+    arquivos.dispatchEvent(event);
+    // listaArquivos();
+}
+function listaArquivos() {
+    var _a;
+    console.log("files", arquivos.files);
+    // <li>
+    //   <span>arquivo.pdf</span>
+    //   <button class="btn-delete-file">x</button>
+    // </li>
+    const ul = dropZone.querySelector("ul");
+    ul.innerHTML = "";
+    if ((_a = arquivos.files) === null || _a === void 0 ? void 0 : _a.length) {
+        // [...arquivos.files].forEach((arquivo) => {arquivo})
+        // for (const arquivo of [...arquivos.files]) {arquivo}
+        // for (const i in [...arquivos.files]) {arquivos.files[i]}
+        for (let i = 0; i < arquivos.files.length; i++) {
+            const li = document.createElement("li");
+            const span = document.createElement("span");
+            span.textContent = arquivos.files[i].name;
+            const button = document.createElement("button");
+            button.classList.add("btn-delete-file");
+            button.textContent = "X";
+            button.dataset.name = arquivos.files[i].name;
+            button.addEventListener("click", (ev) => {
+                ev.stopPropagation();
+                const target = ev.target;
+                removeFile(target.dataset.name);
+            });
+            li.appendChild(span);
+            li.appendChild(button);
+            ul === null || ul === void 0 ? void 0 : ul.appendChild(li);
+        }
+    }
+}
+arquivos.addEventListener("change", listaArquivos);
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input, msg) {
     input.parentNode.querySelector("small").textContent = msg;
@@ -182,7 +251,7 @@ function validateCpf(input) {
     }
     return true;
 }
-function validateImage(input) {
+function validateFiles(input) {
     var _a;
     // const file = input.files![0];
     // console.log("name", file.name);
@@ -217,9 +286,11 @@ function validateForm() {
         celular: true,
         sexo: true,
         foto: true,
+        arquivos: true,
     };
     // 3º pega os campos do formulário
-    const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto } = form;
+    const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto, arquivos, } = form;
+    console.log("arquivos", arquivos.files);
     // 4º cria uma função para validar o campo nome
     const validaNome = () => {
         // verifica se o nome (obrigatório) foi inserido
@@ -317,7 +388,7 @@ function validateForm() {
     sexo[0].parentNode.parentNode.onchange = validaSexo;
     validaSexo();
     const validaFoto = () => {
-        if (!validateImage(foto)) {
+        if (!validateFiles(foto)) {
             showErrorMsg(foto, "Selecione uma foto.");
             objForm.foto = false;
         }
@@ -328,6 +399,18 @@ function validateForm() {
     };
     foto.onchange = validaFoto;
     validaFoto();
+    const validaArquivos = () => {
+        if (!validateFiles(arquivos)) {
+            showErrorMsg(arquivos, "Selecione ao menos 1 arquivo.");
+            objForm.arquivos = false;
+        }
+        else {
+            showErrorMsg(arquivos, "");
+            objForm.arquivos = true;
+        }
+    };
+    arquivos.onchange = validaArquivos;
+    validaArquivos();
     // cria um array com os valores desse objeto
     // [true, true, false, true ...]
     const arrValores = Object.values(objForm);
