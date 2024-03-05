@@ -1,4 +1,7 @@
 const form = document.querySelector("form");
+const listaDepartamentos = document.querySelector("#lista-departamentos");
+const labelDepartamentos = document.querySelector(".label-departamentos");
+const receberOfertas = document.querySelector("#receber-ofertas");
 const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
 const cpf = document.querySelector("#cpf");
@@ -7,6 +10,20 @@ const foto = document.querySelector("#foto");
 const preview = document.querySelector("#preview");
 const dropZone = document.querySelector("#drop-zone");
 const arquivos = document.querySelector("#arquivos");
+if (labelDepartamentos && listaDepartamentos) {
+    listaDepartamentos.style.display = "none";
+    labelDepartamentos.style.display = "none";
+}
+receberOfertas.addEventListener("change", () => {
+    if (receberOfertas.checked) {
+        listaDepartamentos.style.display = "";
+        labelDepartamentos.style.display = "";
+    }
+    else {
+        listaDepartamentos.style.display = "none";
+        labelDepartamentos.style.display = "none";
+    }
+});
 async function loadDeparts() {
     const resp = await fetch("http://localhost:3500/departamentos");
     const departamentos = await resp.json();
@@ -20,15 +37,14 @@ function createListDeparts(departs) {
         lis.push(`
       <li>
         <label class="for-checks">
-          <input type="checkbox" name="interesses[]" value="${depart.id}">
+          <input type="checkbox" name="interesses" value="${depart.id}">
           ${depart.nome}
         </label>
       </li>
     `);
     }
-    const lista = document.querySelector("#lista-departamentos");
-    if (lista) {
-        lista.innerHTML = lis.join("");
+    if (listaDepartamentos) {
+        listaDepartamentos.innerHTML = lis.join("");
     }
 }
 //* CRUD
@@ -147,6 +163,9 @@ function showErrorMsg(input, msg, type = "input") {
         input[0].parentNode.parentNode.querySelector("small").textContent = msg;
     }
 }
+function showErrorMsgCheckbox(inputs, msg) {
+    inputs[0].parentNode.parentNode.parentNode.parentNode.querySelector("small").textContent = msg;
+}
 // função para validar campos obrigatórios
 function validateRequiredField(input) {
     if (!input.value || input.value.length === 0 || input.value.trim() === "") {
@@ -263,6 +282,18 @@ function validateFile(input) {
     }
     return true;
 }
+function validateCheckboxes(receber_ofertas, interesses) {
+    if (receber_ofertas.checked) {
+        const arr = [];
+        [...interesses].forEach((interesse) => {
+            arr.push(interesse.checked);
+        });
+        if (!arr.includes(true)) {
+            return false;
+        }
+    }
+    return true;
+}
 /*
 nome: string; // required, max 50
 sobrenome: string; // required, max 50
@@ -287,10 +318,14 @@ function validateForm() {
         sexo: true,
         foto: true,
         arquivos: true,
+        observacao: true,
+        receber_ofertas: true,
+        interesses: true,
     };
     // 3º pega os campos do formulário
-    const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto, arquivos, } = form;
-    console.log("arquivos", arquivos, arquivos.value, arquivos.files);
+    const { nome, sobrenome, email, nascimento, cpf, celular, sexo, foto, arquivos, observacao, receber_ofertas, interesses, } = form;
+    console.log("receber_ofertas", receber_ofertas, receber_ofertas.checked);
+    console.log("interesses", interesses);
     // 4º cria uma função para validar o campo nome
     const validaNome = () => {
         // verifica se o nome (obrigatorio) foi inserido
@@ -411,6 +446,33 @@ function validateForm() {
     };
     arquivos.onchange = validaArquivos;
     validaArquivos();
+    const validaObservacao = () => {
+        if (!validateRequiredField(observacao)) {
+            showErrorMsg(observacao, "Insira uma mensagem!");
+            objForm.observacao = false;
+        }
+        else {
+            showErrorMsg(observacao, "");
+            objForm.observacao = true;
+        }
+    };
+    observacao.onkeyup = validaObservacao;
+    validaObservacao();
+    const validaInteresses = () => {
+        if (!validateCheckboxes(receber_ofertas, interesses)) {
+            showErrorMsgCheckbox(interesses, "Selecione ao menos 1 interesse!");
+            objForm.interesses = false;
+        }
+        else {
+            showErrorMsgCheckbox(interesses, "");
+            objForm.interesses = true;
+        }
+    };
+    receber_ofertas.onchange = validaInteresses;
+    [...interesses].forEach((interesse) => {
+        interesse.onchange = validaInteresses;
+    });
+    validaInteresses();
     // cria um array com os valores desse objeto
     // [true, true, false, true ...]
     const arrValores = Object.values(objForm);
