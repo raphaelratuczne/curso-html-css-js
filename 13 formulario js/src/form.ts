@@ -1,6 +1,15 @@
 import { IDeparts } from "./types";
 
 const form = document.querySelector("form");
+const listaDepartamentos = document.querySelector(
+  "#lista-departamentos"
+) as HTMLUListElement;
+const labelDepartamentos = document.querySelector(
+  ".label-departamentos"
+) as HTMLLabelElement;
+const receberOfertas = document.querySelector(
+  "#receber-ofertas"
+) as HTMLInputElement;
 const btnEnviar = document.querySelector("#btnEnviar");
 let formSubmitted = false;
 const cpf = document.querySelector("#cpf") as HTMLInputElement;
@@ -9,6 +18,21 @@ const foto = document.querySelector("#foto") as HTMLInputElement;
 const preview = document.querySelector("#preview") as HTMLInputElement;
 const dropZone = document.querySelector("#drop-zone") as HTMLDivElement;
 const arquivos = document.querySelector("#arquivos") as HTMLInputElement;
+
+if (listaDepartamentos && labelDepartamentos) {
+  listaDepartamentos.style.display = "none";
+  labelDepartamentos.style.display = "none";
+}
+
+receberOfertas.addEventListener("change", () => {
+  if (receberOfertas.checked) {
+    listaDepartamentos.style.display = "";
+    labelDepartamentos.style.display = "";
+  } else {
+    listaDepartamentos.style.display = "none";
+    labelDepartamentos.style.display = "none";
+  }
+});
 
 async function loadDeparts() {
   const resp = await fetch("http://localhost:3500/departamentos");
@@ -25,7 +49,7 @@ function createListDeparts(departs: IDeparts[]) {
     lis.push(`
       <li>
         <label class="for-checks">
-          <input type="checkbox" name="interesses[]" value="${depart.id}">
+          <input type="checkbox" name="interesses" value="${depart.id}">
           ${depart.nome}
         </label>
       </li>
@@ -167,6 +191,12 @@ function showErrorMsgRadio(listRadios: RadioNodeList, msg: string) {
     msg;
 }
 
+function showErrorMsgCheckbox(listCheckboxes: RadioNodeList, msg: string) {
+  listCheckboxes[0].parentNode!.parentNode!.parentNode!.parentNode!.querySelector(
+    "small"
+  )!.textContent = msg;
+}
+
 // função para validar campos obrigatórios
 function validateRequired(input: HTMLInputElement) {
   if (!input.value || input.value.length === 0 || input.value.trim() === "") {
@@ -299,6 +329,23 @@ function validateFiles(input: HTMLInputElement) {
   return true;
 }
 
+function validateCheckboxes(
+  receber_ofertas: HTMLInputElement,
+  interesses: RadioNodeList
+) {
+  if (receber_ofertas.checked) {
+    const arr: boolean[] = [];
+    [...interesses].forEach((interesse) => {
+      arr.push((interesse as HTMLInputElement).checked);
+    });
+    if (!arr.includes(true)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 /*
 nome: string; // required, max 50
 sobrenome: string; // required, max 50
@@ -323,6 +370,8 @@ function validateForm() {
     sexo: true,
     foto: true,
     arquivos: true,
+    observacao: true,
+    interesses: true,
   };
   // 3º pega os campos do formulário
   const {
@@ -335,8 +384,12 @@ function validateForm() {
     sexo,
     foto,
     arquivos,
+    observacao,
+    receber_ofertas,
+    interesses,
   } = form!;
-  console.log("arquivos", arquivos.files);
+  console.log("receber_ofertas", receber_ofertas.checked);
+  console.log("interesses", interesses);
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
@@ -455,6 +508,34 @@ function validateForm() {
   };
   arquivos.onchange = validaArquivos;
   validaArquivos();
+
+  const validaObservacao = () => {
+    // verifica se o nome (obrigatório) foi inserido
+    if (!validateRequired(observacao)) {
+      showErrorMsg(observacao, "Por favor digite sua mensagem!");
+      objForm.observacao = false;
+    } else {
+      showErrorMsg(observacao, "");
+      objForm.observacao = true;
+    }
+  };
+  observacao.onkeyup = validaObservacao;
+  validaObservacao();
+
+  const validaInteresses = () => {
+    if (!validateCheckboxes(receber_ofertas, interesses)) {
+      showErrorMsgCheckbox(interesses, "Selecione ao menos 1 arquivo.");
+      objForm.interesses = false;
+    } else {
+      showErrorMsgCheckbox(interesses, "");
+      objForm.interesses = true;
+    }
+  };
+  receber_ofertas.onchange = validaInteresses;
+  [...interesses].forEach((interesse) => {
+    interesse.onchange = validaInteresses;
+  });
+  validaInteresses();
 
   // cria um array com os valores desse objeto
   // [true, true, false, true ...]
