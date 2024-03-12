@@ -1,43 +1,44 @@
-import { IDeparts } from "./types";
+import '../assets/scss/main.scss';
+import { IDeparts } from './types';
 
-const form = document.querySelector("form");
+const form = document.querySelector('form');
 const listaDepartamentos = document.querySelector(
-  "#lista-departamentos"
+  '#lista-departamentos',
 ) as HTMLUListElement;
 const labelDepartamentos = document.querySelector(
-  ".label-departamentos"
+  '.label-departamentos',
 ) as HTMLLabelElement;
 const receberOfertas = document.querySelector(
-  "#receber-ofertas"
+  '#receber-ofertas',
 ) as HTMLInputElement;
-const btnEnviar = document.querySelector("#btnEnviar");
+const btnEnviar = document.querySelector('#btnEnviar');
 let formSubmitted = false;
-const cpf = document.querySelector("#cpf") as HTMLInputElement;
-const celular = document.querySelector("#celular") as HTMLInputElement;
-const foto = document.querySelector("#foto") as HTMLInputElement;
-const preview = document.querySelector("#preview") as HTMLDivElement;
-const dropZone = document.querySelector("#drop-zone") as HTMLDivElement;
-const arquivos = document.querySelector("#arquivos") as HTMLInputElement;
+const cpf = document.querySelector('#cpf') as HTMLInputElement;
+const celular = document.querySelector('#celular') as HTMLInputElement;
+const foto = document.querySelector('#foto') as HTMLInputElement;
+const preview = document.querySelector('#preview') as HTMLDivElement;
+const dropZone = document.querySelector('#drop-zone') as HTMLDivElement;
+const arquivos = document.querySelector('#arquivos') as HTMLInputElement;
 
 if (labelDepartamentos && listaDepartamentos) {
-  listaDepartamentos.style.display = "none";
-  labelDepartamentos.style.display = "none";
+  listaDepartamentos.style.display = 'none';
+  labelDepartamentos.style.display = 'none';
 }
 
-receberOfertas.addEventListener("change", () => {
+receberOfertas.addEventListener('change', () => {
   if (receberOfertas.checked) {
-    listaDepartamentos.style.display = "";
-    labelDepartamentos.style.display = "";
+    listaDepartamentos.style.display = '';
+    labelDepartamentos.style.display = '';
   } else {
-    listaDepartamentos.style.display = "none";
-    labelDepartamentos.style.display = "none";
+    listaDepartamentos.style.display = 'none';
+    labelDepartamentos.style.display = 'none';
   }
 });
 
 async function loadDeparts() {
-  const resp = await fetch("http://localhost:3500/departamentos");
+  const resp = await fetch('http://localhost:3500/departamentos');
   const departamentos: IDeparts[] = await resp.json();
-  console.log("departamentos", departamentos);
+  console.log('departamentos', departamentos);
   createListDeparts(departamentos);
 }
 
@@ -57,7 +58,7 @@ function createListDeparts(departs: IDeparts[]) {
   }
 
   if (listaDepartamentos) {
-    listaDepartamentos.innerHTML = lis.join("");
+    listaDepartamentos.innerHTML = lis.join('');
   }
 }
 
@@ -71,32 +72,32 @@ function createListDeparts(departs: IDeparts[]) {
 function maskCPF(cpf: HTMLInputElement) {
   let value = cpf.value;
   // remove tudo que não é número
-  value = value.replace(/\D/g, "").slice(0, 11);
+  value = value.replace(/\D/g, '').slice(0, 11);
   // mascara o numero como xxx.xxx.xxx-xx
-  value = value.replace(/(\d{3})(\d)/, "$1.$2");
-  value = value.replace(/(\d{3})(\d)/, "$1.$2");
-  value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
   cpf.value = value;
 }
-cpf.addEventListener("keyup", () => maskCPF(cpf));
+cpf.addEventListener('keyup', () => maskCPF(cpf));
 
 // mascara para celular
 function maskCelPhone(celular: HTMLInputElement) {
   let value = celular.value;
   // remove tudo que não é número
-  value = value.replace(/\D/g, "").slice(0, 11);
+  value = value.replace(/\D/g, '').slice(0, 11);
   // mascara o numero como (xx) xxxxx-xxxx
-  value = value.replace(/(\d{2})(\d)/, "($1) $2");
-  value = value.replace(/(\d{5})(\d)/, "$1-$2");
+  value = value.replace(/(\d{2})(\d)/, '($1) $2');
+  value = value.replace(/(\d{5})(\d)/, '$1-$2');
   celular.value = value;
 }
-celular.addEventListener("keyup", () => maskCelPhone(celular));
+celular.addEventListener('keyup', () => maskCelPhone(celular));
 
-foto.addEventListener("change", () => {
+foto.addEventListener('change', () => {
   // console.log("file", foto.files);
-  preview.innerHTML = "";
+  preview.innerHTML = '';
   if (foto.files?.length && foto.files[0]) {
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     preview.appendChild(img);
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -108,31 +109,31 @@ foto.addEventListener("change", () => {
 });
 
 if (dropZone) {
-  dropZone.addEventListener("dragover", (ev: DragEvent) => {
+  dropZone.addEventListener('dragover', (ev: DragEvent) => {
     ev.preventDefault();
-    ev.dataTransfer!.dropEffect = "copy";
-    ev.dataTransfer!.effectAllowed = "all";
+    ev.dataTransfer!.dropEffect = 'copy';
+    ev.dataTransfer!.effectAllowed = 'all';
     // console.log("files dragover", ev.dataTransfer?.files);
   });
-  dropZone.addEventListener("drop", (ev: DragEvent) => {
-    console.log("drop", ev);
-    console.log("files drop", ev.dataTransfer?.files);
+  dropZone.addEventListener('drop', (ev: DragEvent) => {
+    console.log('drop', ev);
+    console.log('files drop', ev.dataTransfer?.files);
     ev.preventDefault();
     if (ev.dataTransfer?.files.length) {
-      console.log("adiciona arquivos");
+      console.log('adiciona arquivos');
       arquivos.files = ev.dataTransfer.files;
-      console.log("arquivos 1", arquivos.files);
-      const event = new Event("change");
+      console.log('arquivos 1', arquivos.files);
+      const event = new Event('change');
       arquivos.dispatchEvent(event);
     }
   });
-  dropZone.addEventListener("click", () => {
+  dropZone.addEventListener('click', () => {
     arquivos.click();
   });
 }
 
 function removeFile(name: string) {
-  console.log("remove file", name);
+  console.log('remove file', name);
   const dt = new DataTransfer();
   for (let i = 0; i < arquivos.files!.length; i++) {
     const file = arquivos.files![i];
@@ -142,23 +143,23 @@ function removeFile(name: string) {
   }
   arquivos.files = dt.files;
 
-  const event = new Event("change");
+  const event = new Event('change');
   arquivos.dispatchEvent(event);
 }
 
 function listaArquivos() {
-  console.log("lista de arquivos");
-  const ul = dropZone.querySelector("ul") as HTMLUListElement;
+  console.log('lista de arquivos');
+  const ul = dropZone.querySelector('ul') as HTMLUListElement;
 
   if (arquivos.files?.length) {
-    ul.innerHTML = "";
+    ul.innerHTML = '';
     for (let i = 0; i < arquivos.files.length; i++) {
-      const li = document.createElement("li");
-      const span = document.createElement("span");
+      const li = document.createElement('li');
+      const span = document.createElement('span');
       span.textContent = arquivos.files[i].name;
-      const button = document.createElement("button");
-      button.classList.add("btn-delete-file");
-      button.textContent = "X";
+      const button = document.createElement('button');
+      button.classList.add('btn-delete-file');
+      button.textContent = 'X';
       button.onclick = function () {
         event?.stopPropagation();
         removeFile(arquivos.files![i].name);
@@ -168,37 +169,37 @@ function listaArquivos() {
       ul.appendChild(li);
     }
   } else {
-    ul.innerHTML = "";
+    ul.innerHTML = '';
   }
 }
-arquivos.addEventListener("change", listaArquivos);
+arquivos.addEventListener('change', listaArquivos);
 
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(
   input: HTMLInputElement | RadioNodeList,
   msg: string,
-  type: "input" | "radio" = "input"
+  type: 'input' | 'radio' = 'input',
 ) {
-  if (type === "input") {
+  if (type === 'input') {
     (input as HTMLInputElement).parentNode!.querySelector(
-      "small"
+      'small',
     )!.textContent = msg;
-  } else if (type === "radio") {
+  } else if (type === 'radio') {
     (input as RadioNodeList)[0].parentNode!.parentNode!.querySelector(
-      "small"
+      'small',
     )!.textContent = msg;
   }
 }
 
 function showErrorMsgCheckbox(inputs: RadioNodeList, msg: string) {
   inputs[0].parentNode!.parentNode!.parentNode!.parentNode!.querySelector(
-    "small"
+    'small',
   )!.textContent = msg;
 }
 
 // função para validar campos obrigatórios
 function validateRequiredField(input: HTMLInputElement) {
-  if (!input.value || input.value.length === 0 || input.value.trim() === "") {
+  if (!input.value || input.value.length === 0 || input.value.trim() === '') {
     return false;
   }
   return true;
@@ -223,10 +224,10 @@ function validateDateField(input: HTMLInputElement) {
   if (input.value) {
     // pega a data atual usando um objeto Date
     const dataAtual = new Date();
-    console.log("dataAtual", dataAtual);
+    console.log('dataAtual', dataAtual);
     // transforma a data passada em um objeto date
     const dataNascimento = new Date(input.value);
-    console.log("dataNascimento", dataNascimento);
+    console.log('dataNascimento', dataNascimento);
     // console.log("getTime", dataAtual.getTime());
     // console.log("getFullYear", dataAtual.getFullYear());
     // console.log("getMonth", dataAtual.getMonth());
@@ -255,9 +256,9 @@ function validateDateField(input: HTMLInputElement) {
 
     // ajusta o timezone da data de nascimento
     const timezone = dataAtual.getTimezoneOffset();
-    console.log("getTimezoneOffset", timezone);
+    console.log('getTimezoneOffset', timezone);
     dataNascimento.setMinutes(dataNascimento.getMinutes() + timezone);
-    console.log("dataNascimento", dataNascimento);
+    console.log('dataNascimento', dataNascimento);
   }
 
   if (!input.value) {
@@ -267,11 +268,11 @@ function validateDateField(input: HTMLInputElement) {
 }
 
 function validateCPF(cpf: HTMLInputElement) {
-  let value = cpf.value.replace(/\D/g, "").slice(0, 11);
+  let value = cpf.value.replace(/\D/g, '').slice(0, 11);
   let Soma;
   let Resto;
   Soma = 0;
-  if (value == "00000000000") return false;
+  if (value == '00000000000') return false;
 
   for (let i = 1; i <= 9; i++) {
     Soma = Soma + parseInt(value.substring(i - 1, i)) * (11 - i);
@@ -297,7 +298,7 @@ function validateCPF(cpf: HTMLInputElement) {
 }
 
 function validateCelPhone(input: HTMLInputElement) {
-  const value = input.value.replace(/\D/g, "");
+  const value = input.value.replace(/\D/g, '');
   if (value.length !== 11) {
     return false;
   }
@@ -325,11 +326,11 @@ function validateFile(input: HTMLInputElement) {
 
 function validateCheckboxes(
   receber_ofertas: HTMLInputElement,
-  interesses: RadioNodeList
+  interesses: any,
 ) {
   if (receber_ofertas.checked) {
     const arr: boolean[] = [];
-    [...interesses].forEach((interesse) => {
+    [...interesses].forEach(interesse => {
       arr.push((interesse as HTMLInputElement).checked);
     });
     if (!arr.includes(true)) {
@@ -382,20 +383,20 @@ function validateForm() {
     receber_ofertas,
     interesses,
   } = form!;
-  console.log("receber_ofertas", receber_ofertas, receber_ofertas.checked);
-  console.log("interesses", interesses);
+  console.log('receber_ofertas', receber_ofertas, receber_ofertas.checked);
+  console.log('interesses', interesses);
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
     // verifica se o nome (obrigatorio) foi inserido
     if (!validateRequiredField(nome)) {
-      showErrorMsg(nome, "O nome é obrigatório!");
+      showErrorMsg(nome, 'O nome é obrigatório!');
       objForm.nome = false;
     } else if (!validateMinLengthField(nome, 3)) {
-      showErrorMsg(nome, "Digite ao menos 3 letras!");
+      showErrorMsg(nome, 'Digite ao menos 3 letras!');
       objForm.nome = false;
     } else {
-      showErrorMsg(nome, "");
+      showErrorMsg(nome, '');
       objForm.nome = true;
     }
   };
@@ -406,13 +407,13 @@ function validateForm() {
   const validaSobrenome = () => {
     // verifica se o sobrenome (obrigatorio) foi digitado
     if (!validateRequiredField(sobrenome)) {
-      showErrorMsg(sobrenome, "O sobrenome é obrigatório!");
+      showErrorMsg(sobrenome, 'O sobrenome é obrigatório!');
       objForm.sobrenome = false;
     } else if (!validateMinLengthField(sobrenome, 3)) {
-      showErrorMsg(sobrenome, "Digite ao menos 3 letras!");
+      showErrorMsg(sobrenome, 'Digite ao menos 3 letras!');
       objForm.sobrenome = false;
     } else {
-      showErrorMsg(sobrenome, "");
+      showErrorMsg(sobrenome, '');
       objForm.sobrenome = true;
     }
   };
@@ -421,10 +422,10 @@ function validateForm() {
 
   const validaEmail = () => {
     if (!validateEmailField(email)) {
-      showErrorMsg(email, "Insira um e-mail válido");
+      showErrorMsg(email, 'Insira um e-mail válido');
       objForm.email = false;
     } else {
-      showErrorMsg(email, "");
+      showErrorMsg(email, '');
       objForm.email = true;
     }
   };
@@ -433,10 +434,10 @@ function validateForm() {
 
   const validaNascimento = () => {
     if (!validateDateField(nascimento)) {
-      showErrorMsg(nascimento, "Insira uma data válida");
+      showErrorMsg(nascimento, 'Insira uma data válida');
       objForm.nascimento = false;
     } else {
-      showErrorMsg(nascimento, "");
+      showErrorMsg(nascimento, '');
       objForm.nascimento = true;
     }
   };
@@ -445,10 +446,10 @@ function validateForm() {
 
   const validaCpf = () => {
     if (!validateCPF(cpf)) {
-      showErrorMsg(cpf, "Insira um CPF válido!");
+      showErrorMsg(cpf, 'Insira um CPF válido!');
       objForm.cpf = false;
     } else {
-      showErrorMsg(cpf, "");
+      showErrorMsg(cpf, '');
       objForm.cpf = true;
     }
   };
@@ -457,10 +458,10 @@ function validateForm() {
 
   const validaCelular = () => {
     if (!validateCelPhone(celular)) {
-      showErrorMsg(celular, "Insira um número válido!");
+      showErrorMsg(celular, 'Insira um número válido!');
       objForm.celular = false;
     } else {
-      showErrorMsg(celular, "");
+      showErrorMsg(celular, '');
       objForm.celular = true;
     }
   };
@@ -469,10 +470,10 @@ function validateForm() {
 
   const validaSexo = () => {
     if (!validateRadio(sexo)) {
-      showErrorMsg(sexo, "Selecione seu sexo!", "radio");
+      showErrorMsg(sexo, 'Selecione seu sexo!', 'radio');
       objForm.sexo = false;
     } else {
-      showErrorMsg(sexo, "", "radio");
+      showErrorMsg(sexo, '', 'radio');
       objForm.sexo = true;
     }
   };
@@ -481,10 +482,10 @@ function validateForm() {
 
   const validaFoto = () => {
     if (!validateFile(foto)) {
-      showErrorMsg(foto, "Selecione uma foto!");
+      showErrorMsg(foto, 'Selecione uma foto!');
       objForm.foto = false;
     } else {
-      showErrorMsg(foto, "");
+      showErrorMsg(foto, '');
       objForm.foto = true;
     }
   };
@@ -493,10 +494,10 @@ function validateForm() {
 
   const validaArquivos = () => {
     if (!validateFile(arquivos)) {
-      showErrorMsg(arquivos, "Selecione ao menos 1 arquivo!");
+      showErrorMsg(arquivos, 'Selecione ao menos 1 arquivo!');
       objForm.arquivos = false;
     } else {
-      showErrorMsg(arquivos, "");
+      showErrorMsg(arquivos, '');
       objForm.arquivos = true;
     }
   };
@@ -505,10 +506,10 @@ function validateForm() {
 
   const validaObservacao = () => {
     if (!validateRequiredField(observacao)) {
-      showErrorMsg(observacao, "Insira uma mensagem!");
+      showErrorMsg(observacao, 'Insira uma mensagem!');
       objForm.observacao = false;
     } else {
-      showErrorMsg(observacao, "");
+      showErrorMsg(observacao, '');
       objForm.observacao = true;
     }
   };
@@ -517,15 +518,15 @@ function validateForm() {
 
   const validaInteresses = () => {
     if (!validateCheckboxes(receber_ofertas, interesses)) {
-      showErrorMsgCheckbox(interesses, "Selecione ao menos 1 interesse!");
+      showErrorMsgCheckbox(interesses, 'Selecione ao menos 1 interesse!');
       objForm.interesses = false;
     } else {
-      showErrorMsgCheckbox(interesses, "");
+      showErrorMsgCheckbox(interesses, '');
       objForm.interesses = true;
     }
   };
   receber_ofertas.onchange = validaInteresses;
-  [...interesses].forEach((interesse) => {
+  [...interesses].forEach(interesse => {
     interesse.onchange = validaInteresses;
   });
   validaInteresses();
@@ -544,14 +545,14 @@ function handleSubmit() {
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
   if (validateForm()) {
-    console.log("O formulário é valido, vamos salvar.");
+    console.log('O formulário é valido, vamos salvar.');
   } else {
-    console.log("O formulário não é valido, vamos corrigir.");
+    console.log('O formulário não é valido, vamos corrigir.');
   }
 }
 
 if (form) {
-  form.addEventListener("submit", (event: Event) => {
+  form.addEventListener('submit', (event: Event) => {
     event.preventDefault();
     return false;
   });
@@ -559,5 +560,5 @@ if (form) {
 
 if (btnEnviar) {
   // 1º ao clicar no botão enviar, chama a função para submeter o formulario
-  btnEnviar.addEventListener("click", handleSubmit);
+  btnEnviar.addEventListener('click', handleSubmit);
 }
