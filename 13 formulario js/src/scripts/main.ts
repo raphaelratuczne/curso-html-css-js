@@ -1,3 +1,4 @@
+import '../assets/scss/main.scss';
 import { IUsersList } from "./types";
 
 let users: IUsersList[] = [];

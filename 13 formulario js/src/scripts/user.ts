@@ -1,3 +1,4 @@
+import '../assets/scss/main.scss';
 import { IDeparts, IUser } from "./types";
 
 const modal = document.querySelector("#modal") as HTMLDialogElement;

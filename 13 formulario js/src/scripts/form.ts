@@ -1,3 +1,4 @@
+import '../assets/scss/main.scss';
 import { IDeparts } from "./types";
 
 const form = document.querySelector("form");
