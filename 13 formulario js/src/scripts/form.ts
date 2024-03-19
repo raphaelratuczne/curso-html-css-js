@@ -1,48 +1,47 @@
 import '../assets/scss/main.scss';
-import { IDeparts } from "./types";
+import { loadDeparts } from './apis/departamentos';
+import { saveUser } from './apis/usuarios';
+import { IDeparts, ISaveUser } from './types';
 
-const form = document.querySelector("form");
+const form = document.querySelector('form');
 const listaDepartamentos = document.querySelector(
-  "#lista-departamentos"
+  '#lista-departamentos',
 ) as HTMLUListElement;
 const labelDepartamentos = document.querySelector(
-  ".label-departamentos"
+  '.label-departamentos',
 ) as HTMLLabelElement;
 const receberOfertas = document.querySelector(
-  "#receber-ofertas"
+  '#receber-ofertas',
 ) as HTMLInputElement;
-const btnEnviar = document.querySelector("#btnEnviar");
+const btnEnviar = document.querySelector('#btnEnviar');
 let formSubmitted = false;
-const cpf = document.querySelector("#cpf") as HTMLInputElement;
-const celular = document.querySelector("#celular") as HTMLInputElement;
-const foto = document.querySelector("#foto") as HTMLInputElement;
-const preview = document.querySelector("#preview") as HTMLInputElement;
-const dropZone = document.querySelector("#drop-zone") as HTMLDivElement;
-const arquivos = document.querySelector("#arquivos") as HTMLInputElement;
+const cpf = document.querySelector('#cpf') as HTMLInputElement;
+const celular = document.querySelector('#celular') as HTMLInputElement;
+const foto = document.querySelector('#foto') as HTMLInputElement;
+const preview = document.querySelector('#preview') as HTMLInputElement;
+const dropZone = document.querySelector('#drop-zone') as HTMLDivElement;
+const arquivos = document.querySelector('#arquivos') as HTMLInputElement;
 
 if (listaDepartamentos && labelDepartamentos) {
-  listaDepartamentos.style.display = "none";
-  labelDepartamentos.style.display = "none";
+  listaDepartamentos.style.display = 'none';
+  labelDepartamentos.style.display = 'none';
 }
 
-receberOfertas.addEventListener("change", () => {
+receberOfertas.addEventListener('change', () => {
   if (receberOfertas.checked) {
-    listaDepartamentos.style.display = "";
-    labelDepartamentos.style.display = "";
+    listaDepartamentos.style.display = '';
+    labelDepartamentos.style.display = '';
   } else {
-    listaDepartamentos.style.display = "none";
-    labelDepartamentos.style.display = "none";
+    listaDepartamentos.style.display = 'none';
+    labelDepartamentos.style.display = 'none';
   }
 });
 
-async function loadDeparts() {
-  const resp = await fetch("http://localhost:3500/departamentos");
-  const departamentos: IDeparts[] = await resp.json();
-  console.log("departamentos", departamentos);
+async function init() {
+  const departamentos = await loadDeparts();
   createListDeparts(departamentos);
 }
-
-loadDeparts();
+init();
 
 function createListDeparts(departs: IDeparts[]) {
   const lis = [];
@@ -57,9 +56,9 @@ function createListDeparts(departs: IDeparts[]) {
     `);
   }
 
-  const lista = document.querySelector("#lista-departamentos");
+  const lista = document.querySelector('#lista-departamentos');
   if (lista) {
-    lista.innerHTML = lis.join("");
+    lista.innerHTML = lis.join('');
   }
 }
 
@@ -73,31 +72,31 @@ function createListDeparts(departs: IDeparts[]) {
 function maskCPF(cpf: HTMLInputElement) {
   let value = cpf.value;
   // remove tudo que não é numero
-  value = value.replace(/\D/g, "").slice(0, 11);
+  value = value.replace(/\D/g, '').slice(0, 11);
   // mascara o numero como xxx.xxx.xxx-xx
-  value = value.replace(/(\d{3})(\d)/, "$1.$2");
-  value = value.replace(/(\d{3})(\d)/, "$1.$2");
-  value = value.replace(/(\d{3})(\d{1,2})/, "$1-$2");
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d)/, '$1.$2');
+  value = value.replace(/(\d{3})(\d{1,2})/, '$1-$2');
   cpf.value = value;
 }
-cpf.addEventListener("keyup", () => maskCPF(cpf));
+cpf.addEventListener('keyup', () => maskCPF(cpf));
 
 // mascara para cpf
 function maskCelPhone(celular: HTMLInputElement) {
   let value = celular.value;
   // remove tudo que não é numero
-  value = value.replace(/\D/g, "").slice(0, 11);
+  value = value.replace(/\D/g, '').slice(0, 11);
   // mascara o numero como (xx) xxxxx-xxxx
-  value = value.replace(/(\d{2})(\d)/, "($1) $2");
-  value = value.replace(/(\d{5})(\d)/, "$1-$2");
+  value = value.replace(/(\d{2})(\d)/, '($1) $2');
+  value = value.replace(/(\d{5})(\d)/, '$1-$2');
   celular.value = value;
 }
-celular.addEventListener("keyup", () => maskCelPhone(celular));
+celular.addEventListener('keyup', () => maskCelPhone(celular));
 
-foto.addEventListener("change", () => {
-  preview.innerHTML = "";
+foto.addEventListener('change', () => {
+  preview.innerHTML = '';
   if (foto.files && foto.files.length) {
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     preview.appendChild(img);
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
@@ -107,32 +106,32 @@ foto.addEventListener("change", () => {
   }
 });
 
-dropZone.addEventListener("dragover", (ev: DragEvent) => {
+dropZone.addEventListener('dragover', (ev: DragEvent) => {
   ev.preventDefault();
-  ev.dataTransfer!.dropEffect = "copy";
-  ev.dataTransfer!.effectAllowed = "all";
+  ev.dataTransfer!.dropEffect = 'copy';
+  ev.dataTransfer!.effectAllowed = 'all';
 });
 
-dropZone.addEventListener("drop", (ev: DragEvent) => {
-  console.log("drop", ev);
-  console.log("files", ev.dataTransfer?.files);
+dropZone.addEventListener('drop', (ev: DragEvent) => {
+  console.log('drop', ev);
+  console.log('files', ev.dataTransfer?.files);
   ev.preventDefault();
   if (ev.dataTransfer?.files.length) {
-    console.log("adicionar arquivos");
+    console.log('adicionar arquivos');
     arquivos.files = ev.dataTransfer?.files;
 
-    const event = new Event("change");
+    const event = new Event('change');
     arquivos.dispatchEvent(event);
     // listaArquivos();
   }
 });
 
-dropZone.addEventListener("click", () => {
+dropZone.addEventListener('click', () => {
   arquivos.click();
 });
 
 function removeFile(name: string) {
-  console.log("removeFile", name);
+  console.log('removeFile', name);
   const dt = new DataTransfer();
   for (const arquivo of [...arquivos.files!]) {
     if (arquivo.name !== name) {
@@ -141,33 +140,33 @@ function removeFile(name: string) {
   }
   arquivos.files = dt.files;
 
-  const event = new Event("change");
+  const event = new Event('change');
   arquivos.dispatchEvent(event);
   // listaArquivos();
 }
 
 function listaArquivos() {
-  console.log("files", arquivos.files);
+  console.log('files', arquivos.files);
   // <li>
   //   <span>arquivo.pdf</span>
   //   <button class="btn-delete-file">x</button>
   // </li>
-  const ul = dropZone.querySelector("ul");
-  ul!.innerHTML = "";
+  const ul = dropZone.querySelector('ul');
+  ul!.innerHTML = '';
   if (arquivos.files?.length) {
     // [...arquivos.files].forEach((arquivo) => {arquivo})
     // for (const arquivo of [...arquivos.files]) {arquivo}
     // for (const i in [...arquivos.files]) {arquivos.files[i]}
 
     for (let i = 0; i < arquivos.files.length; i++) {
-      const li = document.createElement("li");
-      const span = document.createElement("span");
+      const li = document.createElement('li');
+      const span = document.createElement('span');
       span.textContent = arquivos.files[i].name;
-      const button = document.createElement("button");
-      button.classList.add("btn-delete-file");
-      button.textContent = "X";
+      const button = document.createElement('button');
+      button.classList.add('btn-delete-file');
+      button.textContent = 'X';
       button.dataset.name = arquivos.files![i].name;
-      button.addEventListener("click", (ev: Event) => {
+      button.addEventListener('click', (ev: Event) => {
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         removeFile(target.dataset!.name!);
@@ -179,28 +178,28 @@ function listaArquivos() {
   }
 }
 
-arquivos.addEventListener("change", listaArquivos);
+arquivos.addEventListener('change', listaArquivos);
 
 // função para exibir uma msg de erro no campo small
 function showErrorMsg(input: HTMLInputElement, msg: string) {
-  input.parentNode!.querySelector("small")!.textContent = msg;
+  input.parentNode!.querySelector('small')!.textContent = msg;
 }
 
 // função para exibir uma msg de erro no campo small para campos radio
 function showErrorMsgRadio(listRadios: RadioNodeList, msg: string) {
-  listRadios[0].parentNode!.parentNode!.querySelector("small")!.textContent =
+  listRadios[0].parentNode!.parentNode!.querySelector('small')!.textContent =
     msg;
 }
 
 function showErrorMsgCheckbox(listCheckboxes: RadioNodeList, msg: string) {
   listCheckboxes[0].parentNode!.parentNode!.parentNode!.parentNode!.querySelector(
-    "small"
+    'small',
   )!.textContent = msg;
 }
 
 // função para validar campos obrigatórios
 function validateRequired(input: HTMLInputElement) {
-  if (!input.value || input.value.length === 0 || input.value.trim() === "") {
+  if (!input.value || input.value.length === 0 || input.value.trim() === '') {
     return false;
   }
   return true;
@@ -222,7 +221,7 @@ function validateEmail(input: HTMLInputElement) {
 }
 
 function validateCelPhone(input: HTMLInputElement) {
-  const value = input.value.replace(/\D/g, "");
+  const value = input.value.replace(/\D/g, '');
   if (value.length !== 11) {
     return false;
   }
@@ -239,7 +238,7 @@ function validateRadios(input: RadioNodeList) {
 function validateDate(input: HTMLInputElement) {
   if (input.value) {
     const dataAtual = new Date();
-    console.log("dataAtual", dataAtual);
+    console.log('dataAtual', dataAtual);
     // console.log("getTime", dataAtual.getTime());
     // console.log("getFullYear", dataAtual.getFullYear());
     // console.log("getMonth", dataAtual.getMonth());
@@ -260,7 +259,7 @@ function validateDate(input: HTMLInputElement) {
     // console.log("toLocaleTimeString", dataAtual.toLocaleTimeString("pt-BR"));
 
     const dataNascimento = new Date(input.value); // yyyy-mm-dd
-    console.log("dataNascimento", dataNascimento);
+    console.log('dataNascimento', dataNascimento);
     // if (dataNascimento.getTime() > dataAtual.getTime()) {
     //   console.log("A data de nascimento é maior que a data de hj");
     // }
@@ -272,9 +271,9 @@ function validateDate(input: HTMLInputElement) {
 
     // como corrigir o timestamp de uma data setada yyyy-mm-dd
     const timestamp = dataAtual.getTimezoneOffset();
-    console.log("timestamp", timestamp);
+    console.log('timestamp', timestamp);
     dataNascimento.setMinutes(dataNascimento.getMinutes() + timestamp);
-    console.log("data de nascimento com timestamp corrigida", dataNascimento);
+    console.log('data de nascimento com timestamp corrigida', dataNascimento);
   }
 
   if (!input.value) {
@@ -284,11 +283,11 @@ function validateDate(input: HTMLInputElement) {
 }
 
 function validateCpf(input: HTMLInputElement) {
-  let value = input.value.replace(/\D/g, "").slice(0, 11);
+  let value = input.value.replace(/\D/g, '').slice(0, 11);
   let Soma = 0;
   let Resto;
 
-  if (value == "00000000000") return false;
+  if (value == '00000000000') return false;
 
   for (let i = 1; i <= 9; i++) {
     Soma = Soma + parseInt(value.substring(i - 1, i)) * (11 - i);
@@ -332,11 +331,11 @@ function validateFiles(input: HTMLInputElement) {
 
 function validateCheckboxes(
   receber_ofertas: HTMLInputElement,
-  interesses: RadioNodeList
+  interesses: RadioNodeList,
 ) {
   if (receber_ofertas.checked) {
     const arr: boolean[] = [];
-    [...interesses].forEach((interesse) => {
+    [...interesses].forEach(interesse => {
       arr.push((interesse as HTMLInputElement).checked);
     });
     if (!arr.includes(true)) {
@@ -389,20 +388,18 @@ function validateForm() {
     receber_ofertas,
     interesses,
   } = form!;
-  console.log("receber_ofertas", receber_ofertas.checked);
-  console.log("interesses", interesses);
 
   // 4º cria uma função para validar o campo nome
   const validaNome = () => {
     // verifica se o nome (obrigatório) foi inserido
     if (!validateRequired(nome)) {
-      showErrorMsg(nome, "O nome é obrigatório!");
+      showErrorMsg(nome, 'O nome é obrigatório!');
       objForm.nome = false;
     } else if (!validateMinLength(nome, 3)) {
-      showErrorMsg(nome, "Digite ao menos 3 letras!");
+      showErrorMsg(nome, 'Digite ao menos 3 letras!');
       objForm.nome = false;
     } else {
-      showErrorMsg(nome, "");
+      showErrorMsg(nome, '');
       objForm.nome = true;
     }
   };
@@ -413,13 +410,13 @@ function validateForm() {
   const validaSobrenome = () => {
     // verifica se o sobrenome (obrigatorio) foi digitado
     if (!validateRequired(sobrenome)) {
-      showErrorMsg(sobrenome, "O sobrenome é obrigatório!");
+      showErrorMsg(sobrenome, 'O sobrenome é obrigatório!');
       objForm.sobrenome = false;
     } else if (!validateMinLength(sobrenome, 3)) {
-      showErrorMsg(sobrenome, "Digite ao menos 3 letras!");
+      showErrorMsg(sobrenome, 'Digite ao menos 3 letras!');
       objForm.sobrenome = false;
     } else {
-      showErrorMsg(sobrenome, "");
+      showErrorMsg(sobrenome, '');
       objForm.sobrenome = true;
     }
   };
@@ -428,10 +425,10 @@ function validateForm() {
 
   const validaEmail = () => {
     if (!validateEmail(email)) {
-      showErrorMsg(email, "Insira um e-mail válido");
+      showErrorMsg(email, 'Insira um e-mail válido');
       objForm.email = false;
     } else {
-      showErrorMsg(email, "");
+      showErrorMsg(email, '');
       objForm.email = true;
     }
   };
@@ -440,10 +437,10 @@ function validateForm() {
 
   const validaNascimento = () => {
     if (!validateDate(nascimento)) {
-      showErrorMsg(nascimento, "Insira uma data válida");
+      showErrorMsg(nascimento, 'Insira uma data válida');
       objForm.nascimento = false;
     } else {
-      showErrorMsg(nascimento, "");
+      showErrorMsg(nascimento, '');
       objForm.nascimento = true;
     }
   };
@@ -452,10 +449,10 @@ function validateForm() {
 
   const validaCpf = () => {
     if (!validateCpf(cpf)) {
-      showErrorMsg(cpf, "Insira um cpf válido");
+      showErrorMsg(cpf, 'Insira um cpf válido');
       objForm.cpf = false;
     } else {
-      showErrorMsg(cpf, "");
+      showErrorMsg(cpf, '');
       objForm.cpf = true;
     }
   };
@@ -464,10 +461,10 @@ function validateForm() {
 
   const validaCelPhone = () => {
     if (!validateCelPhone(celular)) {
-      showErrorMsg(celular, "Insira um telefone válido");
+      showErrorMsg(celular, 'Insira um telefone válido');
       objForm.celular = false;
     } else {
-      showErrorMsg(celular, "");
+      showErrorMsg(celular, '');
       objForm.celular = true;
     }
   };
@@ -476,10 +473,10 @@ function validateForm() {
 
   const validaSexo = () => {
     if (!validateRadios(sexo)) {
-      showErrorMsgRadio(sexo, "Selecione seu sexo");
+      showErrorMsgRadio(sexo, 'Selecione seu sexo');
       objForm.sexo = false;
     } else {
-      showErrorMsgRadio(sexo, "");
+      showErrorMsgRadio(sexo, '');
       objForm.sexo = true;
     }
   };
@@ -488,10 +485,10 @@ function validateForm() {
 
   const validaFoto = () => {
     if (!validateFiles(foto)) {
-      showErrorMsg(foto, "Selecione uma foto.");
+      showErrorMsg(foto, 'Selecione uma foto.');
       objForm.foto = false;
     } else {
-      showErrorMsg(foto, "");
+      showErrorMsg(foto, '');
       objForm.foto = true;
     }
   };
@@ -500,10 +497,10 @@ function validateForm() {
 
   const validaArquivos = () => {
     if (!validateFiles(arquivos)) {
-      showErrorMsg(arquivos, "Selecione ao menos 1 arquivo.");
+      showErrorMsg(arquivos, 'Selecione ao menos 1 arquivo.');
       objForm.arquivos = false;
     } else {
-      showErrorMsg(arquivos, "");
+      showErrorMsg(arquivos, '');
       objForm.arquivos = true;
     }
   };
@@ -513,10 +510,10 @@ function validateForm() {
   const validaObservacao = () => {
     // verifica se o nome (obrigatório) foi inserido
     if (!validateRequired(observacao)) {
-      showErrorMsg(observacao, "Por favor digite sua mensagem!");
+      showErrorMsg(observacao, 'Por favor digite sua mensagem!');
       objForm.observacao = false;
     } else {
-      showErrorMsg(observacao, "");
+      showErrorMsg(observacao, '');
       objForm.observacao = true;
     }
   };
@@ -525,15 +522,15 @@ function validateForm() {
 
   const validaInteresses = () => {
     if (!validateCheckboxes(receber_ofertas, interesses)) {
-      showErrorMsgCheckbox(interesses, "Selecione ao menos 1 arquivo.");
+      showErrorMsgCheckbox(interesses, 'Selecione ao menos 1 arquivo.');
       objForm.interesses = false;
     } else {
-      showErrorMsgCheckbox(interesses, "");
+      showErrorMsgCheckbox(interesses, '');
       objForm.interesses = true;
     }
   };
   receber_ofertas.onchange = validaInteresses;
-  [...interesses].forEach((interesse) => {
+  [...interesses].forEach(interesse => {
     interesse.onchange = validaInteresses;
   });
   validaInteresses();
@@ -552,14 +549,45 @@ function handleSubmit() {
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
   if (validateForm()) {
-    console.log("O formulário é valido, vamos salvar.");
+    console.log('O formulário é valido, vamos salvar.');
+    const {
+      nome,
+      sobrenome,
+      email,
+      nascimento,
+      cpf,
+      celular,
+      sexo,
+      // foto,
+      // arquivos,
+      observacao,
+      receber_ofertas,
+      // interesses,
+    } = form!;
+
+    const payload: ISaveUser = {
+      nome: nome.value,
+      sobrenome: sobrenome.value,
+      email: email.value,
+      nascimento: nascimento.value,
+      cpf: cpf.value,
+      celular: celular.value,
+      sexo: sexo.value,
+      receber_ofertas: receber_ofertas.checked,
+      // interesses: number[];
+      // foto: string;
+      observacao: observacao.value,
+    };
+    saveUser(payload).then(resp => {
+      console.log('resposta', resp);
+    });
   } else {
-    console.log("O formulário não é valido, vamos corrigir.");
+    console.log('O formulário não é valido, vamos corrigir.');
   }
 }
 
 if (form) {
-  form.addEventListener("submit", (event: Event) => {
+  form.addEventListener('submit', (event: Event) => {
     event.preventDefault();
     return false;
   });
@@ -567,5 +595,5 @@ if (form) {
 
 if (btnEnviar) {
   // 1º ao clicar no botão enviar, chama a função para submeter o formulario
-  btnEnviar.addEventListener("click", handleSubmit);
+  btnEnviar.addEventListener('click', handleSubmit);
 }

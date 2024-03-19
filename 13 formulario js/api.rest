@@ -1,27 +1,20 @@
-GET http://127.0.0.1:3500/lista-materias HTTP/1.1
+GET http://127.0.0.1:3500/usuarios HTTP/1.1
 
 ###
-GET http://127.0.0.1:3500/lista-alunos HTTP/1.1
+GET http://127.0.0.1:3500/enderecos HTTP/1.1
 
 ###
-GET http://127.0.0.1:3500/lista-alunos?_sort=nome HTTP/1.1
+GET http://127.0.0.1:3500/documentos HTTP/1.1
 
 ###
-GET http://127.0.0.1:3500/lista-alunos?_sort=nome&_limit=7&_page=1 HTTP/1.1
+GET http://127.0.0.1:3500/departamentos HTTP/1.1
 
 ###
-GET http://127.0.0.1:3500/lista-alunos?_sort=nome&turma=1 HTTP/1.1
+POST http://127.0.0.1:3500/usuarios HTTP/1.1
+Content-Type: application/json
 
-###
-GET http://127.0.0.1:3500/lista-alunos?_sort=nome&turma=2&nome_like=ana HTTP/1.1
-
-###
-GET http://127.0.0.1:3500/lista-turmas HTTP/1.1
-
-###
-GET https://swapi.dev/api/films/ HTTP/1.1
-
-###
-GET https://swapi.dev/api/people/ HTTP/1.1
+{
+  "nome": "Teste"
+}
 
 

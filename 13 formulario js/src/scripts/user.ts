@@ -1,9 +1,11 @@
 import '../assets/scss/main.scss';
-import { IDeparts, IUser } from "./types";
+import { loadDeparts } from './apis/departamentos';
+import { loadUser } from './apis/usuarios';
+import { IDeparts, IUser } from './types';
 
-const modal = document.querySelector("#modal") as HTMLDialogElement;
-const btnAddEndereco = document.querySelector(".btn-add") as HTMLButtonElement;
-const btnCancelar = document.querySelector(".btn-cancel") as HTMLButtonElement;
+const modal = document.querySelector('#modal') as HTMLDialogElement;
+const btnAddEndereco = document.querySelector('.btn-add') as HTMLButtonElement;
+const btnCancelar = document.querySelector('.btn-cancel') as HTMLButtonElement;
 
 btnAddEndereco.onclick = () => {
   modal?.showModal();
@@ -13,69 +15,58 @@ btnCancelar.onclick = () => {
   modal?.close();
 };
 
-const id = new URLSearchParams(window.location.search).get("id");
-
-async function loadUser(id: number) {
-  if (!id) {
-    return;
-  }
-
-  const resp = await fetch(
-    `http://127.0.0.1:3500/usuarios/${id}?_embed=documentos&_embed=enderecos`
-  );
-  const user: IUser = await resp.json();
-  console.log("user", user);
+async function init() {
+  const id = new URLSearchParams(window.location.search).get('id');
+  const user = await loadUser(Number(id));
   showUserData(user);
 }
-
-loadUser(Number(id));
+init();
 
 async function showUserData(user: IUser) {
   document
-    .querySelector("#linkEditUser")!
-    .setAttribute("href", `form.html?id=${user.id}`);
+    .querySelector('#linkEditUser')!
+    .setAttribute('href', `form.html?id=${user.id}`);
 
-  const elFoto = document.querySelector("#uFoto") as HTMLImageElement;
-  elFoto.setAttribute("src", user.foto);
+  const elFoto = document.querySelector('#uFoto') as HTMLImageElement;
+  elFoto.setAttribute('src', user.foto);
   elFoto.hidden = false;
 
-  document.querySelector("#uId")!.textContent = String(user.id);
+  document.querySelector('#uId')!.textContent = String(user.id);
 
-  document.querySelector(
-    "#uNome"
-  )!.textContent = `${user.nome} ${user.sobrenome}`;
+  document.querySelector('#uNome')!.textContent =
+    `${user.nome} ${user.sobrenome}`;
 
-  document.querySelector("#uEmail")!.textContent = user.email;
+  document.querySelector('#uEmail')!.textContent = user.email;
 
-  const [ano, mes, dia] = user.nascimento.split("-");
-  document.querySelector("#uNasc")!.textContent = `${dia}/${mes}/${ano}`;
+  const [ano, mes, dia] = user.nascimento.split('-');
+  document.querySelector('#uNasc')!.textContent = `${dia}/${mes}/${ano}`;
 
-  document.querySelector("#uCpf")!.textContent = user.cpf;
+  document.querySelector('#uCpf')!.textContent = user.cpf;
 
-  document.querySelector("#uCel")!.textContent = user.celular;
+  document.querySelector('#uCel')!.textContent = user.celular;
 
-  document.querySelector("#uSexo")!.textContent =
-    user.sexo === "M" ? "Masculino" : "Feminino";
+  document.querySelector('#uSexo')!.textContent =
+    user.sexo === 'M' ? 'Masculino' : 'Feminino';
 
-  document.querySelector("#uOfer")!.textContent = user.receber_ofertas
-    ? "Sim"
-    : "Não";
+  document.querySelector('#uOfer')!.textContent = user.receber_ofertas
+    ? 'Sim'
+    : 'Não';
 
-  document.querySelector("#uObs")!.textContent = user.observacao;
+  document.querySelector('#uObs')!.textContent = user.observacao;
 
-  const departamentos: IDeparts[] = await loadDepartamentos();
-  const interesses = user.interesses.map((id) => {
-    const depart = departamentos.find((d) => d.id === id);
+  const departamentos: IDeparts[] = await loadDeparts();
+  const interesses = user.interesses.map(id => {
+    const depart = departamentos.find(d => d.id === id);
     return depart?.nome;
   });
-  document.querySelector("#uInter")!.textContent = interesses.join(", ");
+  document.querySelector('#uInter')!.textContent = interesses.join(', ');
 
-  const listaArquivos = document.querySelector("#lista-arquivos")!;
-  listaArquivos.innerHTML = "";
+  const listaArquivos = document.querySelector('#lista-arquivos')!;
+  listaArquivos.innerHTML = '';
   if (user.documentos) {
     for (const doc of user.documentos) {
-      const divDoc = document.createElement("div");
-      divDoc.classList.add("arquivo");
+      const divDoc = document.createElement('div');
+      divDoc.classList.add('arquivo');
       divDoc.innerHTML = `
         <p><strong>Nome:</strong> ${doc.nome}</p>
         <p><strong>Arquivo:</strong> <a href="#">${doc.nome}.pdf</a></p>
@@ -86,12 +77,12 @@ async function showUserData(user: IUser) {
     }
   }
 
-  const listaEnderecos = document.querySelector("#lista-enderecos")!;
-  listaEnderecos.innerHTML = "";
+  const listaEnderecos = document.querySelector('#lista-enderecos')!;
+  listaEnderecos.innerHTML = '';
   if (user.enderecos) {
     for (const end of user.enderecos) {
-      const divEnd = document.createElement("div");
-      divEnd.classList.add("endereco");
+      const divEnd = document.createElement('div');
+      divEnd.classList.add('endereco');
       divEnd.innerHTML = `
         <p><strong>Identificação:</strong> ${end.nome}</p>
         <p><strong>CEP:</strong> ${end.cep}</p>
@@ -108,9 +99,4 @@ async function showUserData(user: IUser) {
       listaEnderecos.appendChild(divEnd);
     }
   }
-}
-
-async function loadDepartamentos() {
-  const resp = await fetch("http://127.0.0.1:3500/departamentos");
-  return await resp.json();
 }

@@ -1,27 +1,25 @@
 import '../assets/scss/main.scss';
-import { IUsersList } from "./types";
+import { loadUsers } from './apis/usuarios';
+import { IUsersList } from './types';
 
 let users: IUsersList[] = [];
-const modal = document.querySelector("#modal") as HTMLDialogElement;
+const modal = document.querySelector('#modal') as HTMLDialogElement;
 
-document.querySelector(".btn-cancel")!.addEventListener("click", () => {
+document.querySelector('.btn-cancel')!.addEventListener('click', () => {
   modal.close();
 });
 
-async function loadUsers() {
-  const resp = await fetch("http://localhost:3500/usuarios");
-  users = await resp.json();
-  console.log("users", users);
+async function init() {
+  const users = await loadUsers();
   createListUsers(users);
 }
-
-loadUsers();
+init();
 
 function createListUsers(users: IUsersList[]) {
-  const tbody = document.querySelector("tbody");
+  const tbody = document.querySelector('tbody');
   // const trs = [];
   for (const user of users) {
-    const tr = document.createElement("tr");
+    const tr = document.createElement('tr');
     const innerTr = `
       <td><a href="user.html?id=${user.id}"><img src="${user.foto}"></a></td>
       <td><a href="user.html?id=${user.id}">${user.nome} ${user.sobrenome}</a></td>
@@ -34,12 +32,11 @@ function createListUsers(users: IUsersList[]) {
       </td>
     `;
     tr.innerHTML = innerTr;
-    const btnExcluir = tr.querySelector(".btn-delete") as HTMLButtonElement;
+    const btnExcluir = tr.querySelector('.btn-delete') as HTMLButtonElement;
     if (btnExcluir) {
       btnExcluir.onclick = () => {
-        document.querySelector(
-          "#nome-excluir"
-        )!.textContent = `${user.nome} ${user.sobrenome}`;
+        document.querySelector('#nome-excluir')!.textContent =
+          `${user.nome} ${user.sobrenome}`;
         modal.showModal();
       };
     }
