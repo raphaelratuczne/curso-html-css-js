@@ -25,8 +25,28 @@ export interface IUser {
   enderecos?: IEndereco[];
 }
 
+export interface ISaveUser {
+  nome: string;
+  sobrenome: string;
+  email: string;
+  nascimento: string;
+  cpf: string;
+  celular: string;
+  sexo: string;
+  receber_ofertas: boolean;
+  interesses: number[];
+  foto: string;
+  observacao: string;
+}
 export interface IDocumento {
-  id: number;
+  id: string;
+  nome: string;
+  tipo: string;
+  arquivo: string;
+  usuarioId: number;
+}
+
+export interface ISaveDocumento {
   nome: string;
   tipo: string;
   arquivo: string;

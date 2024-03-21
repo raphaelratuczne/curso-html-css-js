@@ -1,4 +1,5 @@
 import '../assets/scss/main.scss';
+import { loadUsers } from './apis/usuarios';
 import { IUsersList } from './types';
 
 let users: IUsersList[] = [];
@@ -8,14 +9,11 @@ document.querySelector('.btn-cancel')!.addEventListener('click', () => {
   modal.close();
 });
 
-async function loadUsers() {
-  const resp = await fetch('http://localhost:3500/usuarios');
-  users = await resp.json();
-  console.log('users', users);
+async function init() {
+  const users = await loadUsers();
   createListUsers(users);
 }
-
-loadUsers();
+init();
 
 function createListUsers(users: IUsersList[]) {
   const tbody = document.querySelector('tbody');

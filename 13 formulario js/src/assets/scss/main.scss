@@ -164,8 +164,8 @@ form {
     margin-bottom: 10px;
   }
 
-  input[type="radio"],
-  input[type="checkbox"] {
+  input[type='radio'],
+  input[type='checkbox'] {
     width: 15px;
     margin-right: 5px;
     transform: translateY(2px);
@@ -188,7 +188,7 @@ form {
         display: flex;
         align-items: center;
 
-        input[type="checkbox"] {
+        input[type='checkbox'] {
           margin-right: 5px;
         }
       }
@@ -249,6 +249,12 @@ form {
 
     &:hover {
       background-color: #0b7dda;
+    }
+
+    &:disabled {
+      background-color: #bdbcbc;
+      color: #333;
+      pointer-events: none;
     }
   }
 }

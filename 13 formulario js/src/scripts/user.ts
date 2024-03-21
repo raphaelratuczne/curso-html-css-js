@@ -1,4 +1,6 @@
 import '../assets/scss/main.scss';
+import { loadDeparts } from './apis/departamentos';
+import { loadUser } from './apis/usuarios';
 import { IDeparts, IUser } from './types';
 
 const modal = document.querySelector('#modal') as HTMLDialogElement;
@@ -13,22 +15,12 @@ btnCancelar.onclick = () => {
   modal?.close();
 };
 
-const id = new URLSearchParams(window.location.search).get('id');
-
-async function loadUser(id: number) {
-  if (!id) {
-    return;
-  }
-
-  const resp = await fetch(
-    `http://127.0.0.1:3500/usuarios/${id}?_embed=documentos&_embed=enderecos`,
-  );
-  const user: IUser = await resp.json();
-  console.log('user', user);
+async function init() {
+  const id = new URLSearchParams(window.location.search).get('id');
+  const user = await loadUser(Number(id));
   showUserData(user);
 }
-
-loadUser(Number(id));
+init();
 
 async function showUserData(user: IUser) {
   document
@@ -62,7 +54,7 @@ async function showUserData(user: IUser) {
 
   document.querySelector('#uObs')!.textContent = user.observacao;
 
-  const departamentos: IDeparts[] = await loadDepartamentos();
+  const departamentos: IDeparts[] = await loadDeparts();
   const interesses = user.interesses.map(id => {
     const depart = departamentos.find(d => d.id === id);
     return depart?.nome;
@@ -107,9 +99,4 @@ async function showUserData(user: IUser) {
       listaEnderecos.appendChild(divEnd);
     }
   }
-}
-
-async function loadDepartamentos() {
-  const resp = await fetch('http://127.0.0.1:3500/departamentos');
-  return await resp.json();
 }
