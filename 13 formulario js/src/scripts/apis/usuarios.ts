@@ -31,3 +31,17 @@ export async function saveUser(payload: ISaveUser) {
   });
   return resp.json();
 }
+
+export async function updateUser(payload: ISaveUser, id: string) {
+  if (!payload || !id) {
+    return;
+  }
+  const resp = await fetch(`http://localhost:3500/usuarios/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  return resp.json();
+}

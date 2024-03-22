@@ -34,8 +34,8 @@ export interface ISaveUser {
   celular: string;
   sexo: string;
   receber_ofertas: boolean;
-  // interesses: number[];
-  // foto: string;
+  interesses: number[];
+  foto: string;
   observacao: string;
 }
 
@@ -44,7 +44,14 @@ export interface IDocumento {
   nome: string;
   tipo: string;
   arquivo: string;
-  usuarioId: number;
+  usuarioId: string;
+}
+
+export interface ISaveDocumento {
+  nome: string;
+  tipo: string;
+  arquivo: string;
+  usuarioId: string;
 }
 
 export interface IEndereco {

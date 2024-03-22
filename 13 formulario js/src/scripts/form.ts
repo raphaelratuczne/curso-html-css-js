@@ -1,7 +1,8 @@
 import '../assets/scss/main.scss';
 import { loadDeparts } from './apis/departamentos';
-import { saveUser } from './apis/usuarios';
-import { IDeparts, ISaveUser } from './types';
+import { addDoc } from './apis/documentos';
+import { saveUser, updateUser } from './apis/usuarios';
+import { IDeparts, ISaveDocumento, ISaveUser } from './types';
 
 const form = document.querySelector('form');
 const listaDepartamentos = document.querySelector(
@@ -544,12 +545,14 @@ function validateForm() {
   return true;
 }
 
-function handleSubmit() {
+async function handleSubmit() {
   // seta a flag para avisar que foi feita uma tentativa de enviar o form
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
   if (validateForm()) {
     console.log('O formulário é valido, vamos salvar.');
+    btnEnviar.setAttribute('disabled', 'true');
+    btnEnviar.textContent = 'Salvando...';
     const {
       nome,
       sobrenome,
@@ -558,12 +561,16 @@ function handleSubmit() {
       cpf,
       celular,
       sexo,
-      // foto,
-      // arquivos,
+      foto,
+      arquivos,
       observacao,
       receber_ofertas,
-      // interesses,
+      interesses,
     } = form!;
+
+    const _interesses = [...interesses]
+      .filter(int => int.checked)
+      .map(int => Number(int.value));
 
     const payload: ISaveUser = {
       nome: nome.value,
@@ -574,13 +581,51 @@ function handleSubmit() {
       celular: celular.value,
       sexo: sexo.value,
       receber_ofertas: receber_ofertas.checked,
-      // interesses: number[];
-      // foto: string;
+      interesses: _interesses,
+      foto: '',
       observacao: observacao.value,
     };
-    saveUser(payload).then(resp => {
-      console.log('resposta', resp);
-    });
+
+    // salva o user sem foto
+    const resp = await saveUser(payload);
+    console.log('resposta', resp);
+
+    if (resp.id) {
+      // se salvou o user, adiciona a foto
+      const reader = new FileReader();
+      reader.onload = async (e: ProgressEvent<FileReader>) => {
+        const payloadComFoto: ISaveUser = {
+          ...resp,
+          foto: e.target!.result as string,
+        };
+        // atualiza o user com a foto
+        await updateUser(payloadComFoto, resp.id);
+      };
+      reader.readAsDataURL(foto.files[0]);
+
+      // salva os arquivos
+      const nFiles = arquivos.files.length;
+      [...arquivos.files].forEach(async (file: File, i: number) => {
+        const payloadDoc: ISaveDocumento = {
+          nome: file.name,
+          tipo: file.type,
+          arquivo: '',
+          usuarioId: resp.id,
+        };
+        const readerDoc = new FileReader();
+        readerDoc.onload = async (ev: ProgressEvent<FileReader>) => {
+          payloadDoc.arquivo = ev.target!.result as string;
+          await addDoc(payloadDoc);
+
+          if (i + 1 === nFiles) {
+            btnEnviar.removeAttribute('disabled');
+            btnEnviar.textContent = 'Enviar';
+            window.location.href = 'index.html';
+          }
+        };
+        readerDoc.readAsDataURL(file);
+      });
+    }
   } else {
     console.log('O formulário não é valido, vamos corrigir.');
   }

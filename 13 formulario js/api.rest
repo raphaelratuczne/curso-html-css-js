@@ -17,4 +17,6 @@ Content-Type: application/json
   "nome": "Teste"
 }
 
+###
+DELETE http://127.0.0.1:3500/usuarios/6e61 HTTP/1.1
 
