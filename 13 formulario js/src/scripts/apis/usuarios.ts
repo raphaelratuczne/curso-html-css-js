@@ -31,3 +31,10 @@ export async function saveUser(payload: ISaveUser) {
   });
   return resp.json();
 }
+
+export async function deleteUser(id: string) {
+  const resp = await fetch(`http://localhost:3500/usuarios/${id}`, {
+    method: 'DELETE',
+  });
+  return resp.json();
+}

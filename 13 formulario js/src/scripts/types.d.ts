@@ -1,5 +1,5 @@
 export interface IUsersList {
-  id: number;
+  id: string;
   nome: string;
   sobrenome: string;
   cpf: string;
@@ -9,7 +9,7 @@ export interface IUsersList {
 }
 
 export interface IUser {
-  id: number;
+  id: string;
   nome: string;
   sobrenome: string;
   email: string;
@@ -43,18 +43,18 @@ export interface IDocumento {
   nome: string;
   tipo: string;
   arquivo: string;
-  usuarioId: number;
+  usuarioId: string;
 }
 
 export interface ISaveDocumento {
   nome: string;
   tipo: string;
   arquivo: string;
-  usuarioId: number;
+  usuarioId: string;
 }
 
 export interface IEndereco {
-  id: number;
+  id: string;
   nome: string;
   rua: string;
   numero: string;
@@ -63,7 +63,7 @@ export interface IEndereco {
   cidade: string;
   estado: string;
   cep: string;
-  usuarioId: number;
+  usuarioId: string;
 }
 
 export interface IDeparts {

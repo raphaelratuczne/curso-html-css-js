@@ -1,11 +1,11 @@
-import { ISaveDocumento } from '../types';
+import { IDocumento, ISaveDocumento } from '../types';
 
 export async function addDoc(payload: ISaveDocumento) {
   if (!payload) {
     return;
   }
 
-  const resp = await fetch('http://127.0.0.1:3500/documentos', {
+  const resp = await fetch('http://localhost:3500/documentos', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,5 +13,21 @@ export async function addDoc(payload: ISaveDocumento) {
     body: JSON.stringify(payload),
   });
 
+  return resp.json();
+}
+
+export async function getDocumentosByUser(
+  userId: string,
+): Promise<IDocumento[]> {
+  const resp = await fetch(
+    `http://localhost:3500/documentos?usuarioId=${userId}`,
+  );
+  return resp.json();
+}
+
+export async function deleteDocumento(id: string) {
+  const resp = await fetch(`http://localhost:3500/documentos/${id}`, {
+    method: 'DELETE',
+  });
   return resp.json();
 }

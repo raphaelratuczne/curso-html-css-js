@@ -1,13 +1,23 @@
 GET http://127.0.0.1:3500/usuarios HTTP/1.1
 
 ###
+GET http://127.0.0.1:3500/usuarios/aaa?_embed=documentos&_embed=enderecos HTTM/1.1
+
+###
 GET http://127.0.0.1:3500/enderecos HTTP/1.1
+
+###
+GET http://127.0.0.1:3500/enderecos?usuarioId=aaa HTTP/1.1
 
 ###
 GET http://127.0.0.1:3500/documentos HTTP/1.1
 
 ###
+GET http://127.0.0.1:3500/documentos?usuarioId=aaa HTTP/1.1
+
+###
 GET http://127.0.0.1:3500/departamentos HTTP/1.1
+
 
 ###
 POST http://127.0.0.1:3500/usuarios HTTP/1.1
