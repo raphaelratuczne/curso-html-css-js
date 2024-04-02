@@ -1,8 +1,8 @@
 import '../assets/scss/main.scss';
 import { loadDeparts } from './apis/departamentos';
 import { addDoc } from './apis/documentos';
-import { saveUser } from './apis/usuarios';
-import { IDeparts, ISaveDocumento, ISaveUser } from './types';
+import { loadUser, saveUser } from './apis/usuarios';
+import { IDeparts, ISaveDocumento, ISaveUser, IUser } from './types';
 
 const form = document.querySelector('form');
 const listaDepartamentos = document.querySelector(
@@ -22,6 +22,7 @@ const foto = document.querySelector('#foto') as HTMLInputElement;
 const preview = document.querySelector('#preview') as HTMLDivElement;
 const dropZone = document.querySelector('#drop-zone') as HTMLDivElement;
 const arquivos = document.querySelector('#arquivos') as HTMLInputElement;
+// let user: IUser | null = null;
 
 if (labelDepartamentos && listaDepartamentos) {
   listaDepartamentos.style.display = 'none';
@@ -41,6 +42,14 @@ receberOfertas.addEventListener('change', () => {
 async function init() {
   const departamentos = await loadDeparts();
   createListDeparts(departamentos);
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (id) {
+    const user = await loadUser(id);
+    console.log('user', user);
+    if (user) {
+      populateForm(user);
+    }
+  }
 }
 init();
 
@@ -59,6 +68,47 @@ function createListDeparts(departs: IDeparts[]) {
 
   if (listaDepartamentos) {
     listaDepartamentos.innerHTML = lis.join('');
+  }
+}
+
+function populateForm(user: IUser) {
+  const {
+    nome,
+    sobrenome,
+    email,
+    nascimento,
+    cpf,
+    celular,
+    sexo,
+    foto,
+    arquivos,
+    observacao,
+    receber_ofertas,
+    interesses,
+  } = form!;
+  nome.value = user.nome;
+  sobrenome.value = user.sobrenome;
+  email.value = user.email;
+  nascimento.value = user.nascimento;
+  cpf.value = user.cpf;
+  celular.value = user.celular;
+  [...sexo].forEach(s => {
+    if (s.value === user.sexo) {
+      s.checked = true;
+    }
+  });
+  // foto
+  // arquivos
+  observacao.value = user.observacao;
+  if (user.receber_ofertas) {
+    receber_ofertas.checked = true;
+    listaDepartamentos.style.display = '';
+    labelDepartamentos.style.display = '';
+    [...interesses].forEach(inter => {
+      if (user.interesses.includes(Number(inter.value))) {
+        inter.checked = true;
+      }
+    });
   }
 }
 

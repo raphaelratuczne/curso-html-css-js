@@ -17,7 +17,7 @@ btnCancelar.onclick = () => {
 
 async function init() {
   const id = new URLSearchParams(window.location.search).get('id');
-  const user = await loadUser(Number(id));
+  const user = await loadUser(id);
   showUserData(user);
 }
 init();

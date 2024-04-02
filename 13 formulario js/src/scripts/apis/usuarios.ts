@@ -6,13 +6,13 @@ export async function loadUsers() {
   return users;
 }
 
-export async function loadUser(id: number) {
+export async function loadUser(id: string) {
   if (!id) {
     return;
   }
 
   const resp = await fetch(
-    `http://127.0.0.1:3500/usuarios/${id}?_embed=documentos&_embed=enderecos`,
+    `http://localhost:3500/usuarios/${id}?_embed=documentos&_embed=enderecos`,
   );
   const user: IUser = await resp.json();
   return user;
