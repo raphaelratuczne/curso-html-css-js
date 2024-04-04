@@ -10,7 +10,11 @@
       "celular": "(00) 00000-0000",
       "sexo": "M",
       "receber_ofertas": true,
-      "interesses": [1, 2, 3],
+      "interesses": [
+        1,
+        2,
+        3
+      ],
       "foto": "https://via.placeholder.com/150",
       "observacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultrices aliquam, nunc nisl aliquet nunc, vitae aliquam nis"
     },
@@ -24,7 +28,11 @@
       "celular": "(00) 00000-0000",
       "sexo": "M",
       "receber_ofertas": true,
-      "interesses": [1, 2, 3],
+      "interesses": [
+        1,
+        2,
+        3
+      ],
       "foto": "https://via.placeholder.com/150",
       "observacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod."
     }
