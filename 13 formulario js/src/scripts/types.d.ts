@@ -25,6 +25,8 @@ export interface IUser {
   enderecos?: IEndereco[];
 }
 
+export interface IUpdateUser extends Partial<IUser> {}
+
 export interface ISaveUser {
   nome: string;
   sobrenome: string;

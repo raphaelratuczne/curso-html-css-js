@@ -38,6 +38,13 @@ function createListUsers(users: IUsersList[]) {
       </td>
     `;
     tr.innerHTML = innerTr;
+    const btnEditar = tr.querySelector('.btn-edit') as HTMLButtonElement;
+    if (btnEditar) {
+      btnEditar.onclick = () => {
+        window.location.href = `form.html?id=${user.id}`;
+      };
+    }
+
     const btnExcluir = tr.querySelector('.btn-delete') as HTMLButtonElement;
     if (btnExcluir) {
       btnExcluir.onclick = () => {
