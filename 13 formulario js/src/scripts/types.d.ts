@@ -38,6 +38,9 @@ export interface ISaveUser {
   foto: string;
   observacao: string;
 }
+
+export interface IUpdateUser extends Partial<ISaveUser> {}
+
 export interface IDocumento {
   id: string;
   nome: string;

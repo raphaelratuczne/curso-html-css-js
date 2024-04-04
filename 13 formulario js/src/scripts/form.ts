@@ -1,8 +1,14 @@
 import '../assets/scss/main.scss';
 import { loadDeparts } from './apis/departamentos';
-import { addDoc } from './apis/documentos';
-import { loadUser, saveUser } from './apis/usuarios';
-import { IDeparts, ISaveDocumento, ISaveUser, IUser } from './types';
+import { addDoc, deleteDocumento } from './apis/documentos';
+import { loadUser, saveUser, updateUser } from './apis/usuarios';
+import {
+  IDeparts,
+  ISaveDocumento,
+  ISaveUser,
+  IUpdateUser,
+  IUser,
+} from './types';
 
 const form = document.querySelector('form');
 const listaDepartamentos = document.querySelector(
@@ -22,7 +28,8 @@ const foto = document.querySelector('#foto') as HTMLInputElement;
 const preview = document.querySelector('#preview') as HTMLDivElement;
 const dropZone = document.querySelector('#drop-zone') as HTMLDivElement;
 const arquivos = document.querySelector('#arquivos') as HTMLInputElement;
-// let user: IUser | null = null;
+let user: IUser | null = null;
+const docsToDelete: string[] = [];
 
 if (labelDepartamentos && listaDepartamentos) {
   listaDepartamentos.style.display = 'none';
@@ -44,10 +51,11 @@ async function init() {
   createListDeparts(departamentos);
   const id = new URLSearchParams(window.location.search).get('id');
   if (id) {
-    const user = await loadUser(id);
-    console.log('user', user);
-    if (user) {
-      populateForm(user);
+    const _user = await loadUser(id);
+    console.log('user', _user);
+    if (_user) {
+      populateForm(_user);
+      user = _user;
     }
   }
 }
@@ -80,8 +88,8 @@ function populateForm(user: IUser) {
     cpf,
     celular,
     sexo,
-    foto,
-    arquivos,
+    // foto,
+    // arquivos,
     observacao,
     receber_ofertas,
     interesses,
@@ -97,8 +105,6 @@ function populateForm(user: IUser) {
       s.checked = true;
     }
   });
-  // foto
-  // arquivos
   observacao.value = user.observacao;
   if (user.receber_ofertas) {
     receber_ofertas.checked = true;
@@ -108,6 +114,34 @@ function populateForm(user: IUser) {
       if (user.interesses.includes(Number(inter.value))) {
         inter.checked = true;
       }
+    });
+  }
+  if (user.foto) {
+    preview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = user.foto;
+    preview.appendChild(img);
+  }
+  if (user.documentos.length > 0) {
+    const ul = dropZone.querySelector(
+      'ul.lista-arquivos-carregados',
+    ) as HTMLUListElement;
+    user.documentos.forEach(doc => {
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = doc.nome;
+      const button = document.createElement('button');
+      button.classList.add('btn-delete-file');
+      button.textContent = 'X';
+      button.onclick = function () {
+        event?.stopPropagation();
+        docsToDelete.push(doc.id);
+        li.remove();
+        console.log('docsToDelete', docsToDelete);
+      };
+      li.appendChild(span);
+      li.appendChild(button);
+      ul.appendChild(li);
     });
   }
 }
@@ -199,7 +233,9 @@ function removeFile(name: string) {
 
 function listaArquivos() {
   console.log('lista de arquivos');
-  const ul = dropZone.querySelector('ul') as HTMLUListElement;
+  const ul = dropZone.querySelector(
+    'ul.lista-arquivos-adicionados',
+  ) as HTMLUListElement;
 
   if (arquivos.files?.length) {
     ul.innerHTML = '';
@@ -532,9 +568,18 @@ function validateForm() {
 
   const validaFoto = () => {
     if (!validateFile(foto)) {
-      showErrorMsg(foto, 'Selecione uma foto!');
-      objForm.foto = false;
+      // se não salvou uma foto antes
+      if (user && user.foto) {
+        showErrorMsg(foto, '');
+        objForm.foto = true;
+      } else {
+        showErrorMsg(foto, 'Selecione uma foto!');
+        objForm.foto = false;
+      }
     } else {
+      if (user) {
+        user.foto = '';
+      }
       showErrorMsg(foto, '');
       objForm.foto = true;
     }
@@ -544,8 +589,19 @@ function validateForm() {
 
   const validaArquivos = () => {
     if (!validateFile(arquivos)) {
-      showErrorMsg(arquivos, 'Selecione ao menos 1 arquivo!');
-      objForm.arquivos = false;
+      // verifica se já tem documentos salvos
+      if (user && user.documentos.length > 0) {
+        if (docsToDelete.length === user.documentos.length) {
+          showErrorMsg(arquivos, 'Selecione ao menos 1 arquivo!');
+          objForm.arquivos = false;
+        } else {
+          showErrorMsg(arquivos, '');
+          objForm.arquivos = true;
+        }
+      } else {
+        showErrorMsg(arquivos, 'Selecione ao menos 1 arquivo!');
+        objForm.arquivos = false;
+      }
     } else {
       showErrorMsg(arquivos, '');
       objForm.arquivos = true;
@@ -590,7 +646,7 @@ function validateForm() {
   return true;
 }
 
-function handleSubmit() {
+async function handleSubmit() {
   // seta a flag para avisar que foi feita uma tentativa de enviar o form
   formSubmitted = true;
   // 2º chama a função para validar o form antes de enviar
@@ -613,35 +669,90 @@ function handleSubmit() {
       interesses,
     } = form!;
 
-    console.log('foto', foto, foto.files![0]);
-
     const _interesses = [...interesses]
       .filter(int => int.checked)
       .map(int => Number(int.value));
 
-    const payload: ISaveUser = {
-      nome: nome.value,
-      sobrenome: sobrenome.value,
-      email: email.value,
-      nascimento: nascimento.value,
-      cpf: cpf.value,
-      celular: celular.value,
-      sexo: sexo.value,
-      receber_ofertas: receber_ofertas.checked,
-      interesses: _interesses,
-      foto: null,
-      observacao: observacao.value,
-    };
+    if (!user) {
+      const payload: ISaveUser = {
+        nome: nome.value,
+        sobrenome: sobrenome.value,
+        email: email.value,
+        nascimento: nascimento.value,
+        cpf: cpf.value,
+        celular: celular.value,
+        sexo: sexo.value,
+        receber_ofertas: receber_ofertas.checked,
+        interesses: _interesses,
+        foto: null,
+        observacao: observacao.value,
+      };
 
-    const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      console.log('e', e.target);
-      payload.foto = e.target!.result as string;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        console.log('e', e.target);
+        payload.foto = e.target!.result as string;
 
-      console.log('payload user', payload);
-      saveUser(payload).then(resp => {
-        console.log('resposta user', resp);
+        console.log('payload user', payload);
+        saveUser(payload).then(resp => {
+          console.log('resposta user', resp);
 
+          const nFiles = arquivos.files.length;
+          [...arquivos.files].forEach(async (arq: File, i: number) => {
+            const readerDoc = new FileReader();
+            readerDoc.onload = async (d: ProgressEvent<FileReader>) => {
+              const payloadDoc: ISaveDocumento = {
+                nome: arq.name,
+                tipo: arq.type,
+                arquivo: d.target!.result as string,
+                usuarioId: resp.id,
+              };
+              await addDoc(payloadDoc);
+              if (i + 1 === nFiles) {
+                btnEnviar.removeAttribute('disabled');
+                btnEnviar.textContent = 'Enviar';
+                window.location.href = 'index.html';
+              }
+            };
+            readerDoc.readAsDataURL(arq);
+          });
+        });
+      };
+      reader.readAsDataURL(foto.files![0]);
+    } else {
+      const payload: IUpdateUser = {
+        nome: nome.value,
+        sobrenome: sobrenome.value,
+        email: email.value,
+        nascimento: nascimento.value,
+        cpf: cpf.value,
+        celular: celular.value,
+        sexo: sexo.value,
+        receber_ofertas: receber_ofertas.checked,
+        interesses: _interesses,
+        observacao: observacao.value,
+      };
+
+      await updateUser(user.id, payload);
+
+      if (foto.files!.length > 0) {
+        const reader = new FileReader();
+        reader.onload = async (e: ProgressEvent<FileReader>) => {
+          const payloadFoto: IUpdateUser = {
+            foto: e.target!.result as string,
+          };
+          await updateUser(user.id, payloadFoto);
+        };
+        reader.readAsDataURL(foto.files![0]);
+      }
+
+      if (docsToDelete.length > 0) {
+        docsToDelete.forEach(async idDoc => {
+          await deleteDocumento(idDoc);
+        });
+      }
+
+      if (arquivos.files.length > 0) {
         const nFiles = arquivos.files.length;
         [...arquivos.files].forEach(async (arq: File, i: number) => {
           const readerDoc = new FileReader();
@@ -650,7 +761,7 @@ function handleSubmit() {
               nome: arq.name,
               tipo: arq.type,
               arquivo: d.target!.result as string,
-              usuarioId: resp.id,
+              usuarioId: user.id,
             };
             await addDoc(payloadDoc);
             if (i + 1 === nFiles) {
@@ -661,9 +772,12 @@ function handleSubmit() {
           };
           readerDoc.readAsDataURL(arq);
         });
-      });
-    };
-    reader.readAsDataURL(foto.files![0]);
+      } else {
+        btnEnviar.removeAttribute('disabled');
+        btnEnviar.textContent = 'Enviar';
+        window.location.href = 'index.html';
+      }
+    }
   } else {
     console.log('O formulário não é valido, vamos corrigir.');
   }

@@ -1,4 +1,4 @@
-import { ISaveUser, IUser } from '../types';
+import { ISaveUser, IUpdateUser, IUser } from '../types';
 
 export async function loadUsers() {
   const resp = await fetch('http://localhost:3500/usuarios');
@@ -24,6 +24,20 @@ export async function saveUser(payload: ISaveUser) {
   }
   const resp = await fetch('http://localhost:3500/usuarios', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  return resp.json();
+}
+
+export async function updateUser(id: string, payload: IUpdateUser) {
+  if (!payload) {
+    return;
+  }
+  const resp = await fetch(`http://localhost:3500/usuarios/${id}`, {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
