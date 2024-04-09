@@ -93,6 +93,18 @@
       "estado": "SP",
       "cep": "00000-000",
       "usuarioId": 1
+    },
+    {
+      "id": "d977",
+      "nome": "casa",
+      "cep": "07097-420",
+      "rua": "dDASDSAD",
+      "numero": "123",
+      "complemento": "ap 123",
+      "bairro": "asdf",
+      "estado": "SP",
+      "cidade": "Guarulhos",
+      "usuarioId": "4937"
     }
   ],
   "documentos": [

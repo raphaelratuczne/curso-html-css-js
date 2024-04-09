@@ -66,10 +66,23 @@ export interface IEndereco {
   cidade: string;
   estado: string;
   cep: string;
-  usuarioId: number;
+  usuarioId: string;
 }
 
+export interface ISaveEndereco extends Partial<IEndereco> {}
+
 export interface IDeparts {
+  id: number;
+  nome: string;
+}
+
+export interface IUf {
+  id: number;
+  nome: string;
+  sigla: string;
+}
+
+export interface ICidade {
   id: number;
   nome: string;
 }

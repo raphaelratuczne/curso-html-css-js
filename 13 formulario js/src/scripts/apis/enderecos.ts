@@ -1,4 +1,20 @@
-import { IEndereco } from '../types';
+import { IEndereco, ISaveEndereco } from '../types';
+
+export async function addEndereco(payload: ISaveEndereco) {
+  if (!payload) {
+    return;
+  }
+
+  const resp = await fetch('http://localhost:3500/enderecos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return resp.json();
+}
 
 export async function getEnderecosByUser(userId: string): Promise<IEndereco[]> {
   const resp = await fetch(
