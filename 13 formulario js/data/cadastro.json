@@ -77,6 +77,18 @@
       "estado": "SP",
       "cep": "00000-000",
       "usuarioId": "aaa"
+    },
+    {
+      "id": "be83",
+      "nome": "casa",
+      "cep": "07097-420",
+      "rua": "Av bartolomeu",
+      "numero": "747",
+      "complemento": "apto 118a",
+      "bairro": "Jardim",
+      "estado": "35",
+      "cidade": "3518800",
+      "usuarioId": "296f"
     }
   ],
   "documentos": [

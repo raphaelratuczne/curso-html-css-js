@@ -69,7 +69,21 @@ export interface IEndereco {
   usuarioId: string;
 }
 
+export interface ISaveEndereco extends Partial<IEndereco> {}
+
 export interface IDeparts {
+  id: number;
+  nome: string;
+}
+
+export interface IUf {
+  id: number;
+  nome: string;
+  sigla: string;
+  regiao: { id: number; sigla: string; nome: string };
+}
+
+export interface ICidade {
   id: number;
   nome: string;
 }
