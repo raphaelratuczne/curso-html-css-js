@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto/Roboto-Medium.ttf');
+}
+
+$body-color: blue;
+
+body {
+  color: $body-color;
+  font-family: 'Roboto';
+  background-image: url(../images/among-us-127.png);
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: 10px 100px;
+}
